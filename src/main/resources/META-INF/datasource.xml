@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <!-- 配置数据库连接池 -->
+    <!--<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/liupeng" />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        &lt;!&ndash;<property name="connectionProperties" value="connectTimeout=1000;socketTimeout=12000" />&ndash;&gt;
+        <property name="connectionProperties" value="useUnicode=true;characterEncoding=UTF-8;useSSL=false;autoReconnect=true;failOverReadOnly=false"></property>
+        &lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+        &lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;
+        <property name="maxWait" value="30000" />
+        &lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />
+        &lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;
+        <property name="minEvictableIdleTimeMillis" value="300000" />
+        &lt;!&ndash;<property name="validationQuery" value="SELECT 'x'" />&ndash;&gt;
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="false" />
+        <property name="testOnReturn" value="false" />
+        &lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小,
+        如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false &ndash;&gt;
+        <property name="poolPreparedStatements" value="true" />
+        <property name="maxPoolPreparedStatementPerConnectionSize"
+                  value="20" />
+        &lt;!&ndash; 配置监控统计拦截的filters &ndash;&gt;
+        <property name="filters" value="stat" />
+    </bean>-->
+
+    <!-- 配置数据库连接池 -->
+    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <!-- MySQL数据源配置,可用于MySQL(4,5) -->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/liupeng?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
+        />
+        <property name="username" value="root" />
+        <property name="password" value="123456" />
+        <property name="initialSize" value="5"></property><!-- 启动时创建的连接数 -->
+        <property name="maxActive" value="200" /> <!-- 连接池的最大连接数 -->
+        <property name="maxIdle" value="100" /> <!-- 最大空闲值，当经过一个高峰后，连接池可以慢慢将已经用不到的连接释放一部分，一直减少到maxIdle为止 -->
+        <property name="minIdle" value="20" />  <!-- 最小空闲值，当空闲的连接数少于阙值时，连接池就会预申请一些连接，以免洪峰来时来不及申请 -->
+        <property name="maxWait" value="1800000" />
+    </bean>
+
+    <bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="configLocation" value="classpath:META-INF/wukong-mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:META-INF/mapper/**/*.xml"/>
+    </bean>
+
+    <bean id="testMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
+        <property name="mapperInterface" value="dao.TestMapper"/>
+    </bean>
+</beans>

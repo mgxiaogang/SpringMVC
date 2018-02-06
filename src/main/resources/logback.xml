@@ -1,0 +1,39 @@
+<configuration scan="true" scanPeriod="5 minutes" debug="false">
+    <property name="logstash.path" value="/Users/liupeng/logs/logback"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <File>${logstash.path}/pur-log.log</File>
+        <append>true</append>
+        <encoder>
+            <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="TIMELOGFILE" class="ch.qos.logback.core.FileAppender">
+        <File>${logstash.path}/pur-time.log</File>
+        <append>true</append>
+        <encoder>
+            <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="DEBUGINFOFILE" class="ch.qos.logback.core.FileAppender">
+        <File>${logstash.path}/pur-debug.log</File>
+        <append>true</append>
+        <encoder>
+            <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="timelogger" level="DEBUG" additivity="false">
+        <appender-ref ref="TIMELOGFILE"/>
+    </logger>
+    <logger name="debuginfologger" level="DEBUG" additivity="false">
+        <appender-ref ref="DEBUGINFOFILE"/>
+    </logger>
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
