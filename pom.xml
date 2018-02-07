@@ -1,154 +1,208 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+    <!--描述信息-->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.liupeng</groupId>
-    <artifactId>demo-web</artifactId>
-    <packaging>war</packaging>
+    <groupId>com.liupeng.mvc</groupId>
+    <artifactId>mvc</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>demo-web Maven Webapp</name>
+    <name>mvc</name>
     <url>http://maven.apache.org</url>
+
+    <!--属性信息-->
     <properties>
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <spring-version>4.2.8.RELEASE</spring-version>
         <project.build.sourceEncoding>${java.encoding}</project.build.sourceEncoding>
         <productionMode>false</productionMode>
+        <freemarker.version>2.3.20</freemarker.version>
+        <slf4j.version>1.7.25</slf4j.version>
     </properties>
 
-    <!--    <dependencyManagement>
-            <dependencies>
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                &lt;!&ndash; Spring框架 start &ndash;&gt;
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-core</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-beans</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-aop</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-aspects</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-context-support</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-jdbc</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-tx</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-orm</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-webmvc</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-test</artifactId>
-                    <version>4.2.8.RELEASE</version>
-                    <scope>test</scope>
-                </dependency>
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                &lt;!&ndash; Spring框架 end &ndash;&gt;
-                &lt;!&ndash; ================================================= &ndash;&gt;
+    <!--聚合-->
+    <modules>
+        <module>mvc-web</module>
+    </modules>
+
+    <!--只是对版本进行管理，不会实际引入jar
+
+    如果dependencies里的dependency自己没有声明version元素，那么maven就
+    会到dependencyManagement里面去找有没有对该artifactId和groupId进行过版本声明，如果有，就继承它，如果
+    没有就会报错，告诉你必须为dependency声明一个version
+    -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- ================================================= -->
+            <!-- Spring框架 start -->
+            <!-- ================================================= -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-orm</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>4.2.8.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.2.8.RELEASE</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- ================================================= -->
+            <!-- Spring框架 end -->
+            <!-- ================================================= -->
 
 
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                &lt;!&ndash; 日志及相关依赖（用slf4j+logback代替jcl+log4j） start &ndash;&gt;
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                <dependency>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                    <version>1.1.2</version>
-                    <scope>test</scope>
-                </dependency>
-                <dependency>
-                    <groupId>org.logback-extensions</groupId>
-                    <artifactId>logback-ext-spring</artifactId>
-                    <version>0.1.4</version>
-                </dependency>
-                <dependency>
-                    <groupId>apache-log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                    <version>999-not-exist</version>
-                </dependency>
-                <dependency>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                    <version>999-not-exist-v3</version>
-                </dependency>
-                <dependency>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <version>999-not-exist-v3</version>
-                </dependency>
-                <dependency>
-                    <groupId>com.alibaba.external</groupId>
-                    <artifactId>jakarta.log4j</artifactId>
-                    <version>999-not-exist-v3</version>
-                </dependency>
-                <dependency>
-                    <groupId>log4j</groupId>
-                    <artifactId>log4j</artifactId>
-                    <version>1.2.17</version>
-                </dependency>
-                &lt;!&ndash; ================================================= &ndash;&gt;
-                &lt;!&ndash; 日志及相关依赖（用slf4j+logback代替jcl+log4j） end &ndash;&gt;
-                &lt;!&ndash; ================================================= &ndash;&gt;
+            <!-- ================================================= -->
+            <!-- 日志及相关依赖（用slf4j+logback代替jcl+log4j） start -->
+            <!-- ================================================= -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.logback-extensions</groupId>
+                <artifactId>logback-ext-spring</artifactId>
+                <version>0.1.4</version>
+            </dependency>
+            <dependency>
+                <groupId>apache-log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>999-not-exist</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>999-not-exist-v3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>999-not-exist-v3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.external</groupId>
+                <artifactId>jakarta.log4j</artifactId>
+                <version>999-not-exist-v3</version>
+            </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+            <!-- ================================================= -->
+            <!-- 日志及相关依赖（用slf4j+logback代替jcl+log4j） end -->
+            <!-- ================================================= -->
+
+            <!--velocity-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>1.7</version>
+            </dependency>
+
+            <!--freemarker-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>${freemarker.version}</version>
+            </dependency>
+
+            <!--junit-->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>3.8.1</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>4.0.0</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 
-
-            </dependencies>
-        </dependencyManagement>-->
-
-
+    <!-- 会实际下载jar包,不写版本号继承自dependencyManagement -->
     <dependencies>
+        <!--日志-->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.0</version>
-            <scope>provided</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
 
         <!-- ================================================= -->
@@ -157,67 +211,66 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.2.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>4.2.8.RELEASE</version>
             <scope>test</scope>
         </dependency>
         <!-- ================================================= -->
         <!-- Spring框架 end -->
         <!-- ================================================= -->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
 
 
         <!-- ================================================= -->
@@ -306,6 +359,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>2.2.0</version>
+        </dependency>
+
+        <!--commons-logging-->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
         </dependency>
     </dependencies>
 
