@@ -123,9 +123,13 @@
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.1.2</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.1.2</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.logback-extensions</groupId>
@@ -193,9 +197,21 @@
     </dependencyManagement>
 
 
-    <!-- 会实际下载jar包,不写版本号继承自dependencyManagement -->
+
+
+
+
+
+
+
+
+    <!-- 会实际下载jar包,不写版本号继承自dependencyManagement,子类会默认继承这里面的 -->
     <dependencies>
-        <!--日志-->
+        <!-- logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -204,6 +220,15 @@
             <groupId>org.slf4j</groupId>
             <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
 
         <!-- ================================================= -->
         <!-- Spring框架 start -->
@@ -261,17 +286,12 @@
         <!-- Spring框架 end -->
         <!-- ================================================= -->
 
+        <!--junit-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-
 
         <!-- ================================================= -->
         <!-- Apache commons start -->
@@ -301,25 +321,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.5</version>
         </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
         <!-- ================================================= -->
         <!-- Apache commons end -->
         <!-- ================================================= -->
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>1.2.3</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
-        </dependency>
 
         <!--mybatis-spring-->
         <dependency>
@@ -360,13 +368,12 @@
             <artifactId>commons-dbcp2</artifactId>
             <version>2.2.0</version>
         </dependency>
-
-        <!--commons-logging-->
-        <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-        </dependency>
     </dependencies>
+
+
+
+
+
 
     <build>
         <finalName>demo-web</finalName>

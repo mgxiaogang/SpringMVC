@@ -13,10 +13,12 @@ import java.io.PrintWriter;
 public class TestServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(TestServlet.class);
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");
         LOG.info("test");
