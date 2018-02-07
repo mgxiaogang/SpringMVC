@@ -23,7 +23,6 @@ public class TestController {
     @ResponseBody
     public void test() {
         LOG.info("test");
-        personDao.add();
         personDao.query();
     }
 }

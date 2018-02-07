@@ -24,7 +24,6 @@ public class PersonDaoImpl implements IPersonDao {
 
     @Override
     public Person query() {
-        //return testMapper.queryPnoerson();
-        return new Person();
+        return testMapper.queryPerson();
     }
 }
