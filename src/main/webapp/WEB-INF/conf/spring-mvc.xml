@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:beans="http://www.springframework.org/schema/c"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 	">
@@ -16,28 +17,31 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
 	</context:component-scan>
-	
+
 	<!-- 默认的注解映射的支持 -->
 	<mvc:annotation-driven>
-		<mvc:message-converters>    
-           <bean class="org.springframework.http.converter.StringHttpMessageConverter" >    
-            <property name = "supportedMediaTypes">  
-                <list>  
+		<mvc:message-converters>
+           <bean class="org.springframework.http.converter.StringHttpMessageConverter" >
+            <property name = "supportedMediaTypes">
+                <list>
                      <value>text/html;charset=UTF-8</value>
-                </list>  
+                </list>
             </property>
            </bean>
-           
-       </mvc:message-converters> 
+
+       </mvc:message-converters>
 	</mvc:annotation-driven>
-	
+
 	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
-	
-			
-	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->	
+
+
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL-->
 	<mvc:default-servlet-handler/>
-	
+
+	<!--视图解析器-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+
 	<!-- 定义无需Controller的url<->view直接映射 -->
 	<!--<mvc:view-controller path="/" view-name="redirect:/frame"/>-->
 	<!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
@@ -45,7 +49,7 @@
 		<!--<property name="prefix" value="/WEB-INF/jsp/" /> -->
 		<!--<property name="suffix"  value=".jsp"></property>-->
 	<!--</bean>-->
-	
+
 	<!-- 拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -53,5 +57,5 @@
 			<bean class="com.liupeng.common.AuthorizedInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 </beans>

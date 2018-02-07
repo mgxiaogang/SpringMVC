@@ -12,14 +12,16 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
     /**
      * ﻿postHandle执行后的动作
      */
+    @Override
     public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
             throws Exception {
-        System.out.println("");
+        System.out.println("afterCompletion");
     }
 
     /**
      * controller执行后的动作,response装饰、解码等
      */
+    @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         System.out.println("postHandle");
     }
@@ -30,7 +32,9 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
      * Controller方法调用之前调用。SpringMVC的这种Interceptor链式结构也是可以进行中断的，这种中断方式是令preHandle的返
      * 回值为false，当preHandle的返回值为false的时候整个请求就结束了。
      */
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("preHandle");
         HandlerMethod handlerMethod = null;
         try {
             handler = (HandlerMethod) handler;
