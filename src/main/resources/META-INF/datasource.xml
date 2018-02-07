@@ -58,6 +58,6 @@
 
     <bean id="testMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
-        <property name="mapperInterface" value="dao.TestMapper"/>
+        <property name="mapperInterface" value="com.liupeng.dao.TestMapper"/>
     </bean>
 </beans>
