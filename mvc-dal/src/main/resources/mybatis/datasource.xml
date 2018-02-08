@@ -22,12 +22,12 @@
 
     <bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="myDataSource"/>
-        <property name="configLocation" value="classpath:META-INF/wukong-mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:META-INF/mapper/**/*.xml"/>
+        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
     </bean>
 
-    <bean id="testMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
-        <property name="mapperInterface" value="com.liupeng.dao.TestMapper"/>
+        <property name="mapperInterface" value="com.liupeng.dao.user.UserMapper"/>
     </bean>
 </beans>

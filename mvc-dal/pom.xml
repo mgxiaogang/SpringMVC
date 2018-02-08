@@ -1,6 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.liupeng.mvc</groupId>
         <artifactId>mvc</artifactId>
@@ -9,29 +10,10 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>mvc-web</artifactId>
-    <packaging>war</packaging>
-    <name>mvc-web</name>
+    <artifactId>mvc-dal</artifactId>
+    <packaging>jar</packaging>
+    <name>mvc-dal</name>
 
-    <dependencies>
-        <!--依赖mvc-service-->
-        <dependency>
-            <groupId>com.liupeng.mvc</groupId>
-            <artifactId>mvc-service</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>

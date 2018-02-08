@@ -22,18 +22,34 @@
     </properties>
 
     <!--聚合-->
+    <!--架构：
+        mvc-web      依赖  mvc-service
+        mvc-service  依赖  mvc-dal-->
     <modules>
         <module>mvc-web</module>
+        <module>mvc-dal</module>
+        <module>mvc-service</module>
     </modules>
 
     <!--只是对版本进行管理，不会实际引入jar
-
     如果dependencies里的dependency自己没有声明version元素，那么maven就
     会到dependencyManagement里面去找有没有对该artifactId和groupId进行过版本声明，如果有，就继承它，如果
     没有就会报错，告诉你必须为dependency声明一个version
     -->
     <dependencyManagement>
         <dependencies>
+            <!--其他模块,不包含web工程，web工程用于构建-->
+            <dependency>
+                <groupId>com.liupeng.mvc</groupId>
+                <artifactId>mvc-dal</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.liupeng.mvc</groupId>
+                <artifactId>mvc-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- ================================================= -->
             <!-- Spring框架 start -->
             <!-- ================================================= -->
@@ -182,11 +198,19 @@
                 <scope>test</scope>
             </dependency>
 
+            <!--javax.servlet-->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>4.0.0</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!--guava-->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>14.0-rc3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -203,10 +227,6 @@
     <!-- 会实际下载jar包,不写版本号继承自dependencyManagement,子类会默认继承这里面的 -->
     <dependencies>
         <!-- logback -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -358,6 +378,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
             <version>2.2.0</version>
+        </dependency>
+
+        <!--guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

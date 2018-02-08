@@ -2,7 +2,8 @@ package com.liupeng.controller;
 
 import javax.annotation.Resource;
 
-import com.liupeng.jdbc.IPersonDao;
+import com.liupeng.dto.User;
+import com.liupeng.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -11,18 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/liupeng/test")
-public class TestController {
+@RequestMapping(value = "/liupeng/user")
+public class UserController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TestController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserController.class);
 
     @Resource
-    private IPersonDao personDao;
+    private IUserService userService;
 
-    @RequestMapping(value = "/addTest", method = RequestMethod.GET)
+    @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseBody
     public void test() {
         LOG.info("test");
-        personDao.query();
+        User user = userService.queryAll();
+        LOG.info(user.toString());
     }
 }

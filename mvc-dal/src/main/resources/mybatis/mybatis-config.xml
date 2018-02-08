@@ -10,4 +10,7 @@
         <package name="com.alibaba.wukong.dal.dataobject"/>
         <package name="com.alibaba.wukong.dal.query.engine"/>
     </typeAliases>-->
+    <typeAliases>
+        <typeAlias alias="User" type="com.liupeng.dto.User"></typeAlias>
+    </typeAliases>
 </configuration>

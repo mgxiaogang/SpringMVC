@@ -54,7 +54,7 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>
-			<bean class="com.liupeng.common.AuthorizedInterceptor" />
+			<bean class="com.liupeng.interceptor.AuthorizedInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

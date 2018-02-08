@@ -1,4 +1,4 @@
-package com.liupeng.common;
+package com.liupeng.interceptor;
 
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
