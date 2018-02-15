@@ -26,8 +26,18 @@
         <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
     </bean>
 
-    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--<property name="annotationClass" value="org.springframework.stereotype.Repository"/>-->
+        <property name="basePackage" value="com.liupeng.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="mySqlSessionFactory"/>
+        <property name="properties">
+            <value>
+                mappers=com.liupeng.BaseMapper
+            </value>
+        </property>
+    </bean>
+    <!--<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionFactory" ref="mySqlSessionFactory"/>
         <property name="mapperInterface" value="com.liupeng.dao.user.UserMapper"/>
-    </bean>
+    </bean>-->
 </beans>

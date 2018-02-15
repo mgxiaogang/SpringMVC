@@ -19,6 +19,8 @@
         <productionMode>false</productionMode>
         <freemarker.version>2.3.20</freemarker.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <pagehelper.version>5.1.2</pagehelper.version>
+        <jsqlparser.version>1.1</jsqlparser.version>
     </properties>
 
     <!--聚合-->
@@ -211,6 +213,23 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>14.0-rc3</version>
+            </dependency>
+
+            <!--通用mapper-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>3.4.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>${jsqlparser.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
