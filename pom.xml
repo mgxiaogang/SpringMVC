@@ -21,6 +21,7 @@
         <slf4j.version>1.7.25</slf4j.version>
         <pagehelper.version>5.1.2</pagehelper.version>
         <jsqlparser.version>1.1</jsqlparser.version>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
     </properties>
 
     <!--聚合-->
@@ -31,6 +32,7 @@
         <module>mvc-web</module>
         <module>mvc-dal</module>
         <module>mvc-service</module>
+        <module>mvc-common</module>
     </modules>
 
     <!--只是对版本进行管理，不会实际引入jar
@@ -50,6 +52,17 @@
                 <groupId>com.liupeng.mvc</groupId>
                 <artifactId>mvc-service</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.liupeng.mvc</groupId>
+                <artifactId>mvc-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
             </dependency>
 
             <!-- ================================================= -->

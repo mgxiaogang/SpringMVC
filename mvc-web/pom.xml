@@ -19,6 +19,12 @@
             <groupId>com.liupeng.mvc</groupId>
             <artifactId>mvc-service</artifactId>
         </dependency>
+        <!--依赖mvc-common-->
+        <dependency>
+            <groupId>com.liupeng.mvc</groupId>
+            <artifactId>mvc-common</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -30,6 +36,12 @@
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
+        </dependency>
+
+        <!--javax.validation-->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
         </dependency>
     </dependencies>
 
