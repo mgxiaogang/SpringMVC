@@ -7,7 +7,7 @@
           id,
           age,
           name
-        FROM USER
+        FROM USER limit 1;
     </select>
 
 </mapper>
