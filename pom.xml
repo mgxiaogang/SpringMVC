@@ -19,6 +19,9 @@
         <productionMode>false</productionMode>
         <freemarker.version>2.3.20</freemarker.version>
         <slf4j.version>1.7.25</slf4j.version>
+        <pagehelper.version>5.1.2</pagehelper.version>
+        <jsqlparser.version>1.1</jsqlparser.version>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
     </properties>
 
     <!--聚合-->
@@ -29,6 +32,7 @@
         <module>mvc-web</module>
         <module>mvc-dal</module>
         <module>mvc-service</module>
+        <module>mvc-common</module>
     </modules>
 
     <!--只是对版本进行管理，不会实际引入jar
@@ -48,6 +52,17 @@
                 <groupId>com.liupeng.mvc</groupId>
                 <artifactId>mvc-service</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.liupeng.mvc</groupId>
+                <artifactId>mvc-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
             </dependency>
 
             <!-- ================================================= -->
@@ -211,6 +226,23 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>14.0-rc3</version>
+            </dependency>
+
+            <!--通用mapper-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper</artifactId>
+                <version>3.4.2</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.jsqlparser</groupId>
+                <artifactId>jsqlparser</artifactId>
+                <version>${jsqlparser.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

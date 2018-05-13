@@ -1,23 +1,23 @@
 package com.liupeng.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
+
 import com.google.common.base.Objects;
 
 /**
  * @author fengdao.lp
+ * @Table 用此注解标明对应的数据库表名, 若无此配置默认是映射为 ConditionRecord->condition_record
  * @date 2018/2/8
  */
-public class User {
-    private int id;
+@Table(name = "user")
+public class User extends BaseDO {
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "age")
     private int age;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -38,7 +38,6 @@ public class User {
     @Override
     public String toString() {
         return Objects.toStringHelper(this.getClass())
-            .add("id", id)
             .add("name", name)
             .add("age", age)
             .toString();
