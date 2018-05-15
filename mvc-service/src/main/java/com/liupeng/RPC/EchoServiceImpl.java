@@ -5,6 +5,7 @@ package com.liupeng.RPC;
  */
 public class EchoServiceImpl implements EchoService {
     // 测试
+    @Override
     public String echo(String ping) {
         int a = 1;
         return ping != null ? ping + "--> i am ok" : "i am ok";

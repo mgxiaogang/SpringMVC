@@ -46,7 +46,7 @@
             <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </layout>
     </appender>
-    <logger name="com.liupeng.monitor.BeaninitializationPerformanceMonitor" level="debug" additivity="false">
+    <logger name="com.liupeng.spring.BeaninitializationPerformanceMonitor" level="debug" additivity="false">
         <appender-ref ref="ClassPerformanceMonitor_LOG"/>
     </logger>
 

@@ -16,8 +16,12 @@
     <name>mvc-service</name>
 
     <dependencies>
+        <!--此处不用写版本号，父类中统一维护-->
         <dependency>
-            <!--此处不用写版本号，父类中统一维护-->
+            <groupId>com.liupeng.mvc</groupId>
+            <artifactId>mvc-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.liupeng.mvc</groupId>
             <artifactId>mvc-dal</artifactId>
         </dependency>

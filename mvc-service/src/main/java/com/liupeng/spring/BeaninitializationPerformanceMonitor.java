@@ -1,4 +1,4 @@
-package com.liupeng.monitor;
+package com.liupeng.spring;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -19,7 +19,7 @@ public class BeaninitializationPerformanceMonitor implements BeanPostProcessor {
     private final Logger logger = LoggerFactory.getLogger(BeaninitializationPerformanceMonitor.class);
 
     private Map<String, Long> staticsMaps = new ConcurrentHashMap<String, Long>();
-    
+
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
         staticsMaps.put(beanName, System.currentTimeMillis());

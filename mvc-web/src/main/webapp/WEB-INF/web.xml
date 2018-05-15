@@ -72,6 +72,15 @@
         <servlet-name>FirstServlet</servlet-name>
         <url-pattern>/demo</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AutowaredServlet</servlet-name>
+        <servlet-class>servlet.autowire.AutowaredServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AutowaredServlet</servlet-name>
+        <url-pattern>/autowaredServlet</url-pattern>
+    </servlet-mapping>
+
 
     <!-- session失效时间(单位为分钟) -->
     <session-config>

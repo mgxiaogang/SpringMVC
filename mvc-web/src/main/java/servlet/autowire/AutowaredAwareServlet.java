@@ -16,7 +16,7 @@ public abstract class AutowaredAwareServlet extends HttpServlet {
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
         super.init(servletConfig);
-        // 将自己定义为bean，继承他的子类才可以依赖注入其他元素
+        // 将自己定义为bean，继承他的子类才可以依赖注入其他元素,因为它是abstract的
         WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
         context.getAutowireCapableBeanFactory().autowireBean(this);
     }
