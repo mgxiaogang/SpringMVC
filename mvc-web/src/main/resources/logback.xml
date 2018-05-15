@@ -6,6 +6,7 @@
         <append>true</append>
         <encoder>
             <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
     <appender name="TIMELOGFILE" class="ch.qos.logback.core.FileAppender">
@@ -13,6 +14,7 @@
         <append>true</append>
         <encoder>
             <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
     <appender name="DEBUGINFOFILE" class="ch.qos.logback.core.FileAppender">
@@ -20,13 +22,74 @@
         <append>true</append>
         <encoder>
             <Pattern>%-20(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32}:%L - %msg%n</Pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
+
+    <!--﻿ spring monitor start-->
+    <appender name="ClassPerformanceMonitor_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logstash.path}/latour_classPerformanceMonitor.log</file>
+        <!--<encoding>UTF-8</encoding>-->
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logstash.path}/latour_classPerformanceMonitor.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </layout>
+    </appender>
+    <logger name="com.liupeng.monitor.BeaninitializationPerformanceMonitor" level="debug" additivity="false">
+        <appender-ref ref="ClassPerformanceMonitor_LOG"/>
+    </logger>
+
+    <appender name="SPRING_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logstash.path}/spring_info.log</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logstash.path}/spring_info.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger{0}] - %msg%n</pattern>
+            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+        </layout>
+    </appender>
+    <logger name="org.springframework.web.context.support.XmlWebApplicationContext" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.beans.factory.xml.XmlBeanDefinitionReader" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.context.support.PropertySourcesPlaceholderConfigurer" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.web.servlet.DispatcherServlet" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.context.support.DefaultLifecycleProcessor" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+    <logger name="org.springframework.web.context.ContextLoader" level="debug" additivity="false" >
+        <appender-ref ref="SPRING_LOG" />
+    </logger>
+     <!--spring monitor end-->
+
+
+
     <logger name="timelogger" level="DEBUG" additivity="false">
         <appender-ref ref="TIMELOGFILE"/>
     </logger>
