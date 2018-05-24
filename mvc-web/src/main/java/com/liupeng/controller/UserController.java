@@ -7,11 +7,12 @@ import javax.annotation.Resource;
 import com.github.pagehelper.PageInfo;
 import com.liupeng.advice.annotation.Rendered;
 import com.liupeng.advice.vo.Result;
+import com.liupeng.controller.annotation.ControllerAnnotation;
+import com.liupeng.controller.enums.ControllerEnum;
 import com.liupeng.dto.User;
 import com.liupeng.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,7 +29,7 @@ public class UserController {
 
     @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseBody
-    public void test() {
+    public void test(@ControllerAnnotation(ControllerEnum.TEST1) int age) {
         LOG.info("testxufan");
         List<User> user = userService.queryAll();
         LOG.info(user.toString());
@@ -68,5 +69,9 @@ public class UserController {
         user.setName("liupeng");
         user.setHeight("181");
         return Result.buildSuccessResultOf(user);
+    }
+
+    public static void main(String[] args) {
+        System.out.println("\033[32m test  \033[39m 时间");
     }
 }

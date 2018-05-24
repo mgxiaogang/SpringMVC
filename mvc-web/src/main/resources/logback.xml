@@ -1,5 +1,8 @@
 <configuration scan="true" scanPeriod="5 minutes" debug="false">
     <property name="logstash.path" value="/Users/liupeng/logs/logback"/>
+    <property name="STDOUT_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %easyHighlight(%5.5level) %magenta(%pid) --- [%15.15thread] %cyan(%-40.40logger{39} [%4.4line]) : %msg%n" />
+
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <File>${logstash.path}/pur-log.log</File>
@@ -25,13 +28,22 @@
             <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!--增加颜色前的配置-->
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>-->
+    <!--增加颜色后的配置-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.liupeng.log.EasyPatternLayout">
+                <pattern>${logging.console.pattern:-${STDOUT_PATTERN}}</pattern>
+            </layout>
             <charset>UTF-8</charset> <!-- 此处设置字符集 -->
         </encoder>
     </appender>
-
     <!--﻿ spring monitor start-->
     <appender name="ClassPerformanceMonitor_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${logstash.path}/latour_classPerformanceMonitor.log</file>
