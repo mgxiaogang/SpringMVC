@@ -8,7 +8,9 @@ import com.github.pagehelper.PageInfo;
 import com.liupeng.advice.annotation.Rendered;
 import com.liupeng.advice.vo.Result;
 import com.liupeng.controller.annotation.ControllerAnnotation;
+import com.liupeng.controller.annotation.JSON;
 import com.liupeng.controller.enums.ControllerEnum;
+import com.liupeng.domain.UserVO;
 import com.liupeng.dto.User;
 import com.liupeng.service.IUserService;
 import org.slf4j.Logger;
@@ -27,9 +29,21 @@ public class UserController {
     @Resource
     private IUserService userService;
 
+    /**
+     * 访问路径：http://localhost:8080/liupeng/user/parseParam?age=1&name=liupeng
+     *
+     * @param userVO 入参
+     */
+    @RequestMapping(value = "/parseParam", method = RequestMethod.GET)
+    @ResponseBody
+    public void parseParam(@JSON UserVO userVO) {
+        LOG.info("uservo:{}", com.alibaba.fastjson.JSON.toJSONString(userVO));
+    }
+
+    @ControllerAnnotation(ControllerEnum.TEST1)
     @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseBody
-    public void test(@ControllerAnnotation(ControllerEnum.TEST1) int age) {
+    public void test() {
         LOG.info("testxufan");
         List<User> user = userService.queryAll();
         LOG.info(user.toString());
@@ -69,9 +83,5 @@ public class UserController {
         user.setName("liupeng");
         user.setHeight("181");
         return Result.buildSuccessResultOf(user);
-    }
-
-    public static void main(String[] args) {
-        System.out.println("\033[32m test  \033[39m 时间");
     }
 }

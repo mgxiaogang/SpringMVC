@@ -1,10 +1,17 @@
 package com.liupeng.aop;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
-import java.util.Arrays;
 
+import com.google.common.base.Preconditions;
 import com.liupeng.controller.annotation.ControllerAnnotation;
+import com.liupeng.controller.annotation.JSON;
+import net.sf.cglib.reflect.FastClass;
+import net.sf.cglib.reflect.FastConstructor;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -13,6 +20,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Service;
 
@@ -33,20 +42,12 @@ public class ControllerAspect implements Ordered {
     private void controllerPointCut() {
     }
 
-    //@Before("controllerPointCut()")
-    //public void beforeController(JoinPoint joinPoint) throws Exception {
-    //    Class<?> clazz = joinPoint.getTarget().getClass();
-    //    MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
-    //    LOG.info("class is :" + clazz);
-    //    LOG.info("method is :" + methodSignature.getMethod().getName());
-    //}
-
     /**
-     * @param joinPoint
-     * @return
+     * @param joinPoint joinPoint
+     * @return 返回
      */
     @Around("controllerPointCut()")
-    public Object aroundController(ProceedingJoinPoint joinPoint) {
+    public Object aroundController(ProceedingJoinPoint joinPoint) throws Exception {
         Class<?> clazz = joinPoint.getTarget().getClass();
         MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
         Method method = methodSignature.getMethod();
@@ -62,13 +63,12 @@ public class ControllerAspect implements Ordered {
             LOG.info("方法上存在注解:{}", controllerAnnotation.value().getName());
         }
         if (ArrayUtils.isNotEmpty(parameters)) {
-            Parameter parameter = Arrays.stream(parameters).filter(param -> {
-                if (param.isAnnotationPresent(ControllerAnnotation.class)) {
-                    LOG.info("参数上存在注解:{}", param.getAnnotation(ControllerAnnotation.class).value().getName());
-                    return true;
+            for (Parameter parameter : parameters) {
+                if (parameter.isAnnotationPresent(JSON.class)) {
+                    LOG.info("参数上存在JSON注解");
+                    parseParam(parameter, parameter.getAnnotation(JSON.class));
                 }
-                return false;
-            }).findAny().orElse(null);
+            }
         }
         if (null == controllerAnnotation) {
             LOG.error("类或方法上不存在注解");
@@ -81,6 +81,64 @@ public class ControllerAspect implements Ordered {
             LOG.error("execute error");
         }
         return retValue;
+    }
+
+    /**
+     * 将入参解析到VO中
+     *
+     * @param parameter  入参
+     * @param annotation 注解
+     */
+    private void parseParam(Parameter parameter, JSON annotation) throws Exception {
+        Class<?> clazz = parameter.getType();
+        // 获取FastConstructor
+        FastConstructor fastConstructor = getFastConstructor(clazz);
+        // 获取实例
+        Object object = getNewInstance(fastConstructor);
+
+        if (null != object) {
+            BeanWrapper beanWrapper = new BeanWrapperImpl(object);
+            PropertyDescriptor[] propertyDescriptor = beanWrapper.getPropertyDescriptors();
+            // BeanWrapper具体用法看blowfish
+        } else {
+            LOG.error("object is null");
+        }
+    }
+
+    /**
+     * 创建实例
+     *
+     * @param fastConstructor 构造器
+     * @return 实例
+     * @throws Exception 异常
+     */
+    private static Object getNewInstance(FastConstructor fastConstructor) throws Exception {
+        try {
+            return fastConstructor.newInstance();
+        } catch (InvocationTargetException e) {
+            throw new Exception("Failed to create instance of class " + fastConstructor.getDeclaringClass().getName(),
+                e.getCause());
+        }
+    }
+
+    /**
+     * 根据对象类型获取对象构造器
+     *
+     * @param beanType 对象类型
+     * @return 构造器
+     */
+    private static FastConstructor getFastConstructor(Class<?> beanType) {
+        int mod = beanType.getModifiers();
+        Preconditions.checkArgument(!Modifier.isAbstract(mod) && Modifier.isPublic(mod),
+            "Class to set properties should be public and concrete: %s", beanType.getName());
+        Constructor<?> constructor;
+        try {
+            constructor = beanType.getConstructor();
+        } catch (Exception e) {
+            throw new IllegalArgumentException(String.format("Class to set properties has no default constructor: %s",
+                beanType.getName()));
+        }
+        return FastClass.create(beanType).getConstructor(constructor);
     }
 
     /**
