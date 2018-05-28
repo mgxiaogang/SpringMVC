@@ -62,4 +62,14 @@ public class User {
         this.height = height;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+            "id=" + id +
+            ", rootId='" + rootId + '\'' +
+            ", name='" + name + '\'' +
+            ", age='" + age + '\'' +
+            ", height='" + height + '\'' +
+            '}';
+    }
 }
