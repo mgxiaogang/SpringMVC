@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Preconditions;
 import com.liupeng.BaseMapper;
 import com.liupeng.dto.BaseDO;
 import com.liupeng.dto.User;
@@ -65,6 +66,19 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseDO> {
 
     public T selectByPrimaryKey(Long id) {
         return mapper.selectByPrimaryKey(id);
+    }
+
+    public int updateByPrimaryKeySelective(T entity) throws Exception {
+        Preconditions.checkArgument(entity != null, "参数为空");
+        Preconditions.checkArgument(entity.getId() != null && entity.getId() > 0, "参数必须>0");
+        int update;
+        try {
+            // 根据ID更新
+            update = mapper.updateByPrimaryKeySelective(entity);
+        } catch (Exception e) {
+            throw new Exception("异常");
+        }
+        return update;
     }
 
     public void deleteByPrimaryKey(Long key) {
