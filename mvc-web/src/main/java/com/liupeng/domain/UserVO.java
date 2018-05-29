@@ -2,13 +2,17 @@ package com.liupeng.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * @author fengdao.lp
  * @date 2018/5/24
  */
 public class UserVO {
+
     private int age;
 
+    @NotBlank(message = "名称不能为空")
     private String name;
 
     private Date date;

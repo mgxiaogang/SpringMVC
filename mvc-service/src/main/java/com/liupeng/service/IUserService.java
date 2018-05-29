@@ -19,4 +19,6 @@ public interface IUserService {
     void deleteByPrimaryKey(Long l);
 
     PageInfo<User> selectByPage();
+
+    User selectByPrimaryKey(Long i);
 }

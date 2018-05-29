@@ -78,7 +78,7 @@ public class ControllerAspect implements Ordered {
         try {
             retValue = joinPoint.proceed();
         } catch (Throwable throwable) {
-            LOG.error("execute error");
+            LOG.error("execute error", throwable);
         }
         return retValue;
     }

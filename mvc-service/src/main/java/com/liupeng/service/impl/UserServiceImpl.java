@@ -22,6 +22,8 @@ public class UserServiceImpl extends BaseService<UserMapper, User> implements IU
 
     @Override
     public List<User> queryAll() {
+        // 是否进行count查询
+        // PageHelper.startPage(1, 2,true);
         PageHelper.startPage(1, 2);
         List<User> list = userMapper.queryPerson();
         PageInfo<User> pageInfo = new PageInfo<>(list);

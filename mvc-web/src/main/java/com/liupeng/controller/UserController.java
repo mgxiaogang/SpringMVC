@@ -33,7 +33,7 @@ public class UserController {
     private IUserService userService;
 
     /**
-     * 1.访问路径：http://localhost:8080/liupeng/user/parseParam2?age=2&name=liupeng&date=2018-05-25%2012:00:00
+     * 1.访问路径：http://localhost:8080/liupeng/user/parseParam1?age=2&name=liupeng&date=2018-05-25%2012:00:00
      *
      * @param userVO 入参
      */
@@ -80,7 +80,9 @@ public class UserController {
         User user = new User();
         user.setAge(21);
         User u = userService.selectOne(user);
-        //LOG.info(u.toString());
+
+        User user2 = userService.selectByPrimaryKey(1L);
+        System.out.println(user2);
 
         // 根据主键删除一条记录
         //userService.deleteByPrimaryKey(3L);

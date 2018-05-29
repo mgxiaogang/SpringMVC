@@ -63,6 +63,10 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseDO> {
         return mapper.selectOne(entity);
     }
 
+    public T selectByPrimaryKey(Long id) {
+        return mapper.selectByPrimaryKey(id);
+    }
+
     public void deleteByPrimaryKey(Long key) {
         mapper.deleteByPrimaryKey(key);
     }
