@@ -20,13 +20,26 @@ public class SpringCacheTestServiceImpl {
         return null;
     }
 
-    @Cacheable(value = "simple", key = "#user.id")
+    @Cacheable(value = "simple", key = "#user.name")
     public User find3(User user) {
+        return new User();
+    }
+
+    @Cacheable(value = "simple", key = "#p0.name")
+    public User find4(User user) {
         return null;
     }
 
-    @Cacheable(value = "simple", key = "#p0.id")
-    public User find4(User user) {
+    /**
+     * 缓存的配置在springCache-bean.xml中配置的
+     */
+    public User findById(User user) {
+        return null;
+    }
+    /**
+     * 缓存的配置在springCache-bean.xml中配置的
+     */
+    public User findByName(User user) {
         return null;
     }
 }
