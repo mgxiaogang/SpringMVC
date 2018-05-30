@@ -31,4 +31,5 @@
     </bean>
 
     <import resource="classpath:mybatis/datasource.xml"></import>
+    <import resource="springCache-bean.xml"></import>
 </beans>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+
+      http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--***********************************-->
+    <!-- 基于注解配置spring cache -->
+    <!--***********************************-->
+    <!--
+
+        注意：只会去寻找定义在同一个ApplicationContext下的@Cacheable等缓存注解
+        1.cache-manager：属性用来指定当前所使用的CacheManager对应的bean的名称，默认是cacheManager，所以当我们的CacheManager的id为cacheManager时我们可以不指定该参数，否则就需要我们指定了。
+        2.mode：属性可选值有proxy（内部调用不缓存,标注的方法必须是public的）和aspectj（内部调用也缓存，方法修饰符无限制），默认是使用proxy。
+        3.proxy-target-class：属性标识是否要代理class,默认为false。为true或者mode为aspectj的时候，标注在接口上的缓存注解不生效，因为是基于class的
+        4.key-generator：默认生成策略如下：
+            如果方法没有参数，则使用0作为key。
+            如果只有一个参数的话则使用该参数作为key。
+            如果参数多余一个的话则使用所有参数的hashCode作为key。
+          key-generator：自定义策略->在方法上加@Cacheable等注解实现
+    -->
+    <cache:annotation-driven/>
+
+
+
+
+
+
+
+
+
+    <!--***********************************-->
+    <!-- 基于xml配置方式使用spiring cache -->
+    <!--***********************************-->
+    <!--aop-->
+    <aop:config proxy-target-class="false">
+        <aop:advisor advice-ref="cacheAdvice"
+                     pointcut="execution(* com.liupeng.spring.springCache.SpringCacheTestServiceImpl.*(..))"/>
+    </aop:config>
+
+    <!--
+        配置advice
+        1.指定了将缓存findById方法和find方法到命名空间为users的缓存中
+        2.这里的方法还可以使用通配符“*”，比如“find*”表示任何以“find”开始的方法
+    -->
+    <cache:advice id="cacheAdvice" cache-manager="cacheManager">
+        <cache:caching cache="users">
+            <cache:cacheable method="findById" key="#p0"/>
+            <cache:cacheable method="find" key="#user.id"/>
+            <cache:cache-evict method="deleteAll" all-entries="true"/>
+        </cache:caching>
+    </cache:advice>
+
+
+    <!--定义CacheManager：基于ConcurrentMap的配置-->
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="simple"/>
+            </set>
+        </property>
+    </bean>
+    <!--定义CacheManager：基于Ehcache的配置-->
+    <!--<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
+          p:cache-manager-ref="ehcacheManager"/>
+    <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+          p:config-location="ehcache-spring.xml"/>-->
+</beans>

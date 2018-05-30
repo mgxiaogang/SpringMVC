@@ -1,4 +1,4 @@
-package com.liupeng.controller;
+package com.liupeng.controller.spring;
 
 import com.liupeng.spring.listener.MyApplicationEventPublisher;
 import org.slf4j.Logger;
