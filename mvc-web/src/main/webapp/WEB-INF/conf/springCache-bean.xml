@@ -24,13 +24,6 @@
     <cache:annotation-driven/>
 
 
-
-
-
-
-
-
-
     <!--***********************************-->
     <!-- 基于xml配置方式使用spiring cache -->
     <!--***********************************-->
@@ -54,11 +47,12 @@
     </cache:advice>
 
 
-    <!--定义CacheManager：基于ConcurrentMap的配置-->
+    <!--定义CacheManager数据源：基于ConcurrentMap的配置-->
     <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
                 <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="simple"/>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" p:name="test"/>
             </set>
         </property>
     </bean>
