@@ -1,4 +1,4 @@
-package com.liupeng.service.spring.beanRegister;
+package com.liupeng.spring.beanRegister;
 
 /**
  * @author fengdao.lp

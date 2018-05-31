@@ -25,6 +25,11 @@
             <groupId>com.liupeng.mvc</groupId>
             <artifactId>mvc-dal</artifactId>
         </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

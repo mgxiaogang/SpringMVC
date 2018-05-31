@@ -1,4 +1,4 @@
-package com.liupeng.controller.spring;
+package com.liupeng.controller.spring.springCache;
 
 import com.liupeng.dto.User;
 import com.liupeng.spring.springCache.SpringCacheTestServiceImpl;

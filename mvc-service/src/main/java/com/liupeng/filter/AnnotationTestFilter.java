@@ -1,4 +1,4 @@
-package com.liupeng.service.filter;
+package com.liupeng.filter;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * 过滤器，基于servlet3.0后才有@WebFilter等标签
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * @author fengdao.lp
  * @date 2018/5/31
  */
-@Component
+@Service
 @WebFilter(
     filterName = "annotationTestFilter",
     urlPatterns = "/*",
@@ -28,7 +28,6 @@ public class AnnotationTestFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-
     }
 
     @Override
