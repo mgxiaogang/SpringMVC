@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service
 @WebFilter(
     filterName = "annotationTestFilter",
-    urlPatterns = "/*",
+    urlPatterns = "/liupeng/*",
     initParams = @WebInitParam(name = "wukong", value = "liupeng"))
 public class AnnotationTestFilter implements Filter {
 
