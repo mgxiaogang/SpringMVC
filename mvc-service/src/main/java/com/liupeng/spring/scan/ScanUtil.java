@@ -102,7 +102,6 @@ public class ScanUtil {
             }
             return this.set;
         }
-
     }
 
     public static void main(String[] args) {
