@@ -38,11 +38,18 @@
             <artifactId>freemarker</artifactId>
         </dependency>
 
-        <!--javax.validation-->
+        <!--
+            1.javax.validation 只是一个协议
+            2.还需要一个javax.validation的实现，比如hibernate-validator
+        -->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate.validator</groupId>-->
+            <!--<artifactId>hibernate-validator</artifactId>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

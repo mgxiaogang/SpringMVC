@@ -76,18 +76,20 @@
     <mvc:default-servlet-handler/>
 
 
+    <!-- 静态资源放行 -->
+    <mvc:resources location="/resources/" mapping="/resources/**/*"/>
+
+    <!-- 定义无需Controller的url<->view直接映射 -->
+    <mvc:view-controller path="/" view-name="redirect:/frame"/>
+
     <!-- *************************** -->
     <!--视图解析器-->
     <!-- *************************** -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
-
-    <!-- 定义无需Controller的url<->view直接映射 -->
-    <!--<mvc:view-controller path="/" view-name="redirect:/frame"/>-->
-    <!--<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
-        <!--<property name="prefix" value="/WEB-INF/jsp/"/>-->
-        <!--<property name="suffix" value=".jsp"></property>-->
-    <!--</bean>-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
 
     <!-- 拦截器 -->
     <!--<mvc:interceptors>

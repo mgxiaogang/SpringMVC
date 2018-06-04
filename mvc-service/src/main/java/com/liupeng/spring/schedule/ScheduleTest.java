@@ -9,16 +9,16 @@ import org.springframework.stereotype.Service;
  * @author fengdao.lp
  * @date 2018/5/30
  */
-@Service
+//@Service
 //@EnableScheduling
 public class ScheduleTest {
 
-    @Scheduled(fixedDelay = 5000)
+    //@Scheduled(fixedDelay = 5000)
     public void test() {
         System.out.println("schedule");
     }
 
-    @Scheduled(cron = "*/5 * * * * ?")
+    //@Scheduled(cron = "*/5 * * * * ?")
     public void test2() {
         System.out.println("schedule1");
     }
