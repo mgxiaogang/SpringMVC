@@ -17,6 +17,7 @@ import com.liupeng.dto.User;
 import com.liupeng.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,9 @@ public class UserController {
 
     @Resource
     private IUserService userService;
+
+    @Value("${man}")
+    private String man;
 
     /**
      * 1.访问路径：http://localhost:8080/liupeng/user/parseParam1?age=2&name=liupeng&date=2018-05-25%2012:00:00
@@ -63,6 +67,7 @@ public class UserController {
     @ResponseBody
     public void test() {
         LOG.info("testxufan");
+        System.out.println(man);
         List<User> user = userService.queryAll();
         LOG.info(user.toString());
     }

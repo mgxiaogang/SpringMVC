@@ -11,8 +11,8 @@
         <property name="url"
                   value="jdbc:mysql://localhost:3306/liupeng?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;zeroDateTimeBehavior=convertToNull"
         />
-        <property name="username" value="root" />
-        <property name="password" value="123456" />
+        <property name="username" value="${mysql.username}" />
+        <property name="password" value="${mysql.password}" />
         <property name="initialSize" value="5"></property><!-- 启动时创建的连接数 -->
         <property name="maxActive" value="200" /> <!-- 连接池的最大连接数 -->
         <property name="maxIdle" value="100" /> <!-- 最大空闲值，当经过一个高峰后，连接池可以慢慢将已经用不到的连接释放一部分，一直减少到maxIdle为止 -->

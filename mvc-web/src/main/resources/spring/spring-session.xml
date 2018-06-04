@@ -5,13 +5,13 @@
 					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
     <!-- redis 连接池 -->
-    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <property name="maxTotal" value="20"></property>
         <property name="maxIdle" value="1"></property>
-    </bean>
+    </bean>-->
 
     <!-- redis 连接工厂 -->
-    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    <!--<bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           destroy-method="destroy">
         <property name="hostName" value="127.0.0.1"/>
         <property name="port" value="6379"/>
@@ -19,7 +19,7 @@
         <property name="password" value=""/>
         <property name="usePool" value="true"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
-    </bean>
+    </bean>-->
 
     <!-- spring session 配置 -->
     <!--
@@ -27,8 +27,8 @@
         2.而该Bean负责将HttpSession 的实现替换成 Spring Session
         3.Spring Session 依赖 Redis 存储客户端的 Session 信息
     -->
-    <bean id="redisHttpSessionConfiguration"
+    <!--<bean id="redisHttpSessionConfiguration"
           class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration">
         <property name="maxInactiveIntervalInSeconds" value="600"/>
-    </bean>
+    </bean>-->
 </beans>
