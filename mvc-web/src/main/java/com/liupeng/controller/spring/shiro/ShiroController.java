@@ -32,7 +32,7 @@ public class ShiroController {
     @RequestMapping("/login")
     public void test() {
         // 读取 shiro.ini 文件内容
-        Factory factory = new IniSecurityManagerFactory("classpath:spring/shiro.ini");
+        Factory factory = new IniSecurityManagerFactory("classpath:spring/shiro-realm.ini");
         SecurityManager securityManager = (SecurityManager)factory.getInstance();
         SecurityUtils.setSecurityManager(securityManager);
 

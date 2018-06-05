@@ -19,6 +19,7 @@
     </listener>
 
     <!--
+        Spring session配置
         1.每个客户端请求经过 DelegatingFilterProxy 过滤
         2.会在 Spring 容器中查找名为 springSessionRepositoryFilter 的 Bean，将其转化成 Filter 对请求数据进行过滤
         3.注意：：如果项目中还配置了其他过滤器，该过滤器必须配置在所有过滤器的首位。
@@ -29,6 +30,26 @@
     </filter>
     <filter-mapping>
         <filter-name>springSessionRepositoryFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>-->
+
+
+    <!--
+        Spring shiro配置
+        1.每个客户端请求经过 DelegatingFilterProxy 过滤
+        2.会在 Spring 容器中查找名为 shiroFilter 的 Bean，将其转化成 Filter 对请求数据进行过滤
+        3.注意：：如果项目中还配置了其他过滤器，该过滤器必须配置在所有过滤器的首位。
+    -->
+    <!--<filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>-->
 
