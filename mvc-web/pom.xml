@@ -50,6 +50,12 @@
             <!--<groupId>org.hibernate.validator</groupId>-->
             <!--<artifactId>hibernate-validator</artifactId>-->
         <!--</dependency>-->
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock</artifactId>
+            <version>2.13.0</version>
+        </dependency>
     </dependencies>
 
     <build>
