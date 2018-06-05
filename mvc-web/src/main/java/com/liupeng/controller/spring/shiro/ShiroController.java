@@ -15,7 +15,6 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.Factory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * shiro
@@ -27,6 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/shiro")
 public class ShiroController {
 
+    /**
+     * 登录
+     */
     @RequestMapping("/login")
     public void test() {
         // 读取 shiro.ini 文件内容
@@ -66,25 +68,25 @@ public class ShiroController {
             // 测试权限
             System.out.println("是否拥有 user:create 权限" + currentUser.isPermitted("user:create"));
             // 退出
-            currentUser.logout();
+            //currentUser.logout();
         }
     }
 
+    /**
+     * 登出
+     */
     @RequestMapping("/logout")
-    @ResponseBody
     public String logout(HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "redirect:/index.jsp";
     }
 
-    @RequestMapping("manageUI")
-    public String manageUI(HttpServletRequest request) {
-        //主体
-        Subject subject = SecurityUtils.getSubject();
-        System.out.println(subject.getPrincipal());
-        //User user = (User) subject.getPrincipal();
-        //request.setAttribute("loginUser", user);
-        return "manageUI";
+    /**
+     * 跳转到页面验证shiro
+     */
+    @RequestMapping("listUI")
+    public String listUI(HttpServletRequest request) {
+        return "user/listUI";
     }
 }
