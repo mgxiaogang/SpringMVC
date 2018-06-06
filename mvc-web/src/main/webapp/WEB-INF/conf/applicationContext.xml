@@ -24,13 +24,15 @@
 
     <!-- 配置文件 -->
     <bean id="propertyFileConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>/WEB-INF/application.properties</value>
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/application.properties</value>
+            </list>
         </property>
     </bean>
 
-    <import resource="classpath:mybatis/datasource.xml"></import>
-    <import resource="classpath:spring/springCache-bean.xml"></import>
-    <import resource="classpath:spring/spring-session.xml"></import>
-    <import resource="classpath:spring/spring-shiro.xml"></import>
+    <import resource="classpath*:mybatis/datasource.xml"></import>
+    <import resource="classpath*:spring/springCache-bean.xml"></import>
+    <import resource="classpath*:spring/spring-session.xml"></import>
+    <import resource="classpath*:spring/spring-shiro.xml"></import>
 </beans>

@@ -514,8 +514,46 @@
     </dependencies>
 
 
+    <profiles>
+        <!-- 开发环境：默认激活 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <profile.path>config/dev</profile.path>
+                <profile.spring>myDev,myDatasource</profile.spring>
+                <env.name>dev</env.name>
+            </properties>
+        </profile>
+        <!-- 日常环境 -->
+        <profile>
+            <id>daily</id>
+            <properties>
+                <profile.path>config/daily</profile.path>
+                <profile.spring>myDev,myDatasource</profile.spring>
+                <env.name>daily</env.name>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <finalName>demo-web</finalName>
+        <resources>
+            <!--maven环境隔离配置：resources节点 - 此目录下会根据激活profile-->
+            <resource>
+                <directory>src/main/resources/${profile.path}</directory>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/dev/*.*</exclude>
+                    <exclude>**/daily/*.*</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

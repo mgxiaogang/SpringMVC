@@ -18,7 +18,7 @@ import org.springframework.util.PropertyPlaceholderHelper;
 /**
  * 配置文件占位符操作类,替换如下配置
  * <code>
- *     <context:property-placeholder location="classpath:META-INF/wukong-dao.properties,xxx.properties/>
+ * <context:property-placeholder location="classpath:META-INF/wukong-dao.properties,xxx.properties/>
  * </code>
  *
  * @author fengdao.lp
@@ -55,9 +55,9 @@ public class PropertyPlaceholderConfigurerSet extends PropertyPlaceholderConfigu
      *     <bean id="propertyConfigurerTest" class="com.x.x.PropertyPlaceholderConfigurerSet" lazy-init="false">
      *         ﻿<property name="locations">
      *             <list>
-     *                 <value>
-     *                     classpath*:properties/*.properties
-     *                 </value>
+     *                 <value>classpath*:*.properties</value>
+     *                 <value>classpath*:config/test.properties</value>
+     *                 <value>classpath*:config/${profile.path:dev}/*.properties</value>
      *             </list>
      *         </property>
      *     </bean>
@@ -66,8 +66,12 @@ public class PropertyPlaceholderConfigurerSet extends PropertyPlaceholderConfigu
     // @formatter:on
     @Override
     public void afterPropertiesSet() throws Exception {
-        String path = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "properties/*.properties";
-        Resource[] resources = resourcePatternResolver.getResources(path);
+        // maven profile指定了具体环境对应的配置文件到classpath下
+        String path1 = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "*.properties";
+        String path2 = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "config/test.properties";
+        Resource[] resources1 = resourcePatternResolver.getResources(path1);
+        Resource[] resources2 = resourcePatternResolver.getResources(path2);
+        Resource[] resources = ArrayUtils.addAll(resources1, resources2);
         super.setLocations(resources);
         super.setFileEncoding("UTF-8");
     }

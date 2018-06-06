@@ -33,8 +33,14 @@ public class UserController {
     @Resource
     private IUserService userService;
 
-    @Value("${man}")
-    private String man;
+    @Value("${superMan}")
+    private String superMan;
+
+    @Value("${enviroment}")
+    private String enviroment;
+
+    @Value("${alibaba}")
+    private String alibaba;
 
     /**
      * 1.访问路径：http://localhost:8080/liupeng/user/parseParam1?age=2&name=liupeng&date=2018-05-25%2012:00:00
@@ -67,7 +73,7 @@ public class UserController {
     @ResponseBody
     public void test() {
         LOG.info("testxufan");
-        System.out.println(man);
+        System.out.println(superMan);
         List<User> user = userService.queryAll();
         LOG.info(user.toString());
     }
