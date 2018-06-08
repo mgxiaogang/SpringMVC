@@ -21,9 +21,20 @@
         <property name="maxWait" value="1800000"/>
     </bean>
 
+    <!-- 多数据源绑定,支持动态切换 -->
+    <bean id="multiDataSource" class="com.liupeng.spring.dynamicdatasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="myDataSource" value-ref="myDataSource"/>
+            </map>
+        </property>
+        <!--默认数据源-->
+        <property name="defaultTargetDataSource" ref="myDataSource"/>
+    </bean>
+
     <!--sqlSessionFactoryBean-->
     <bean id="mySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="myDataSource"/>
+        <property name="dataSource" ref="multiDataSource"/>
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
         <property name="mapperLocations" value="classpath:mybatis/mapper/**/*.xml"/>
     </bean>
