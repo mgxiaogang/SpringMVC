@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--拦截器代理类-->
+    <bean id="sqlExecutorAdvice" class="com.liupeng.sqlexec.service.aop.SqlExecutorAdvice"/>
+
+    <!--使用代理类对实现类进行拦截-->
+    <bean id="sqlExecutorServiceImplProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="sqlExecutorServiceImpl"/>
+        <property name="interceptorNames">
+            <list>
+                <value>sqlExecutorAdvice</value>
+            </list>
+        </property>
+    </bean>
+</beans>
