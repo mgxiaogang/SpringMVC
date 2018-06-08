@@ -1,11 +1,9 @@
 package com.liupeng.sqlexec.service.datasource.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import com.liupeng.spring.beanFactory.CacheBeansFactory;
 import com.liupeng.sqlexec.service.datasource.IDataSourceFactory;
 import com.liupeng.sqlexec.service.datasource.IDataSourceSwitch;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,18 +11,27 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DataSourceFactory implements IDataSourceFactory {
-    @Resource
+    /*@Resource
     List<IDataSourceSwitch> dataSourceSwithers;
 
     @Override
-    public IDataSourceSwitch getDateSourceSwitch(String daName) {
+    public IDataSourceSwitch getDateSourceSwitch(String dbName) {
         IDataSourceSwitch ret = null;
         for (IDataSourceSwitch dataSourceSwitch : dataSourceSwithers) {
-            if (dataSourceSwitch.supports(daName)) {
+            if (dataSourceSwitch.supports(dbName)) {
                 ret = dataSourceSwitch;
                 break;
             }
         }
+        return ret;
+    }*/
+
+    @Autowired
+    private CacheBeansFactory cacheBeansFactory;
+
+    @Override
+    public IDataSourceSwitch getDateSourceSwitch(String dbName) {
+        IDataSourceSwitch ret = cacheBeansFactory.getBean(IDataSourceSwitch.class, dbName);
         return ret;
     }
 }
