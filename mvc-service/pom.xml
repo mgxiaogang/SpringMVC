@@ -26,6 +26,11 @@
             <artifactId>mvc-dal</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.liupeng.mvc</groupId>
+            <artifactId>dubbo-api</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <scope>compile</scope>

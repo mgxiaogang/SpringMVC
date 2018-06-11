@@ -36,4 +36,5 @@
     <import resource="classpath*:spring/spring-session.xml"></import>
     <import resource="classpath*:spring/spring-shiro.xml"></import>
     <import resource="classpath*:spring/sql-exec.xml"></import>
+    <!--<import resource="classpath*:spring/spring-dubbo-provider.xml"></import>-->
 </beans>
