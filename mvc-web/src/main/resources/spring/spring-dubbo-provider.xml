@@ -17,6 +17,9 @@
     <bean id="helloService" class="com.liupeng.Dubbo.service.DemoServiceImpl"></bean>
     <dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="helloService" protocol="dubbo"/>
 
+    <!-- 注册中心自动查找监控服务 -->
+    <dubbo:monitor protocol="registry"/>
+
     <!--dubbo消费者配置-->
     <!--<dubbo:reference interface="com.liupeng.Dubbo.service.DubboHelloService"/>-->
 </beans>
