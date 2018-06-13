@@ -1,5 +1,8 @@
 package com.liupeng.spring.httpclient;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,13 +14,15 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class HttpClientTest {
 
-    private static final String URL = "http://localhost:8088/springBoot/helloworld1?username=li";
+    private static final String URL = "http://localhost:8088/springBoot/helloworld1?username={username}";
 
     @Autowired
     private RestTemplate restTemplate;
 
     public void httpClientTest() {
-        String str = restTemplate.getForObject(URL, String.class);
+        Map<String, Object> map = Maps.newHashMap();
+        map.put("username", "Liu");
+        String str = restTemplate.getForObject(URL, String.class, map);
         System.out.println(str);
     }
 }
