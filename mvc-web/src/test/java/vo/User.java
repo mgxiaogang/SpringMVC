@@ -1,5 +1,6 @@
 package vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -8,7 +9,7 @@ import com.alibaba.fastjson.annotation.JSONField;
  * @author fengdao.lp
  * @date 2018/5/20
  */
-public class User {
+public class User implements Serializable {
     private Integer id;
 
     private String username;

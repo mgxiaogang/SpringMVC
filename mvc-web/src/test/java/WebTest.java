@@ -46,7 +46,7 @@ public class WebTest {
         User user = new User();
         user.setUsername("LP");
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
-            "http://localhost:8088/springBoot/helloworld1", user, String.class);
+            "http://localhost:8088/springBoot/helloworld1?username=123", user, String.class);
         System.out.println(responseEntity);
     }
 }
