@@ -1,10 +1,12 @@
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.google.common.collect.Maps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,6 +30,7 @@ public class WebTest {
 
     @Test
     public void testRestTemplate() {
+
         Map<String, Object> map = Maps.newHashMap();
         map.put("username", "Liu");
         String str = restTemplate.getForObject(URL, String.class, map);
@@ -48,5 +51,13 @@ public class WebTest {
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(
             "http://localhost:8088/springBoot/helloworld1?username=123", user, String.class);
         System.out.println(responseEntity);
+
+        Map<String, Object> callParams = new HashMap<>();
+        callParams.put("method", "queryJobStatus");
+        callParams.put("recordId", 123);
+        HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity(callParams);
+        Map result =
+            restTemplate.postForEntity("http://sic.alibaba-inc.com/offcalcpai/rest.json", request, Map.class).getBody();
+        System.out.println(result);
     }
 }

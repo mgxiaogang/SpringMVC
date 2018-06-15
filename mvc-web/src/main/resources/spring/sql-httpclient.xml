@@ -6,6 +6,7 @@
 
     <!--Http client Factory-->
     <bean id="httpClientFactory" class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+    <!--<bean id="httpClientFactory" class="org.springframework.http.client.OkHttpClientHttpRequestFactory">-->
         <property name="connectTimeout" value="30000"/>
         <property name="readTimeout" value="30000"/>
     </bean>
