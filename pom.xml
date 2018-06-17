@@ -183,7 +183,7 @@
                 <artifactId>log4j</artifactId>
                 <version>999-not-exist</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>999-not-exist-v3</version>
@@ -192,7 +192,7 @@
                 <groupId>com.alibaba.external</groupId>
                 <artifactId>jakarta.log4j</artifactId>
                 <version>999-not-exist-v3</version>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
