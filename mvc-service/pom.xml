@@ -27,7 +27,8 @@
         </dependency>
         <dependency>
             <groupId>com.liupeng.mvc</groupId>
-            <artifactId>dubbo-api</artifactId>
+            <artifactId>mvc-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>

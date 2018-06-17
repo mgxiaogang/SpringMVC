@@ -8,9 +8,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>dubbo-api</artifactId>
+    <artifactId>mvc-api</artifactId>
     <packaging>jar</packaging>
-    <name>dubbo-api</name>
+    <name>mvc-api</name>
 
     <dependencies>
         <dependency>
@@ -21,6 +21,6 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>dubbo-api</finalName>
+        <finalName>mvc-api</finalName>
     </build>
 </project>

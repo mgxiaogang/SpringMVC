@@ -33,7 +33,7 @@
         <module>mvc-dal</module>
         <module>mvc-service</module>
         <module>mvc-common</module>
-        <module>dubbo-api</module>
+        <module>mvc-api</module>
     </modules>
 
     <!--只是对版本进行管理，不会实际引入jar
@@ -61,7 +61,7 @@
             </dependency>
             <dependency>
                 <groupId>com.liupeng.mvc</groupId>
-                <artifactId>dubbo-api</artifactId>
+                <artifactId>mvc-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
