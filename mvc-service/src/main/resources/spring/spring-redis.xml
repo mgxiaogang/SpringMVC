@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 
+    <!--
+        redisTemplate方式
+    -->
     <!-- 池化使用：连接池配置 -->
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
         <!-- 最大连接数 -->
@@ -28,10 +31,90 @@
         <property name="blockWhenExhausted" value="false"/>
     </bean>
 
+    <!-- Redis sentinel集群配置 -->
+    <bean id="sentinelConfig" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
+        <constructor-arg index="0" type="java.lang.String" value="master001"/>
+        <constructor-arg index="1" type="java.util.Set">
+            <set>
+                <value>127.0.0.1:6379</value>
+                <value>127.0.0.1:6379</value>
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <!-- Redis 连接工厂【spring-data-redis 1.0.x系列】 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:use-pool="true">
+        <!--<constructor-arg index="0" type="org.springframework.data.redis.connection.RedisSentinelConfiguration" ref="sentinelConfig"/>-->
+        <property name="poolConfig" ref="jedisPoolConfig"/>
+        <property name="hostName" value="127.0.0.1"/>
+        <property name="port" value="6379"/>
+        <property name="timeout" value="50000"/>
+        <property name="usePool" value="true"/>
+    </bean>
+
+    <!-- Redis 持久化模板 -->
+    <bean id="jsonRedisSerializer" class="org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer">
+        <constructor-arg name="mapper">
+            <bean class="com.fasterxml.jackson.databind.ObjectMapper"/>
+        </constructor-arg>
+    </bean>
+    <bean id="jdks" class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="jedisConnectionFactory"/>
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer" ref="jsonRedisSerializer"/>
+        <property name="hashKeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="hashValueSerializer" ref="jsonRedisSerializer"/>
+    </bean>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+        池化使用redis
+    -->
     <!-- redis单机 通过连接池 -->
     <bean id="jedisPool" class="redis.clients.jedis.JedisPool" destroy-method="close">
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
         <constructor-arg name="host" value="127.0.0.1"/>
         <constructor-arg name="port" value="6379"/>
     </bean>
+    <!--redis集群分片-->
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">
+        <constructor-arg index="0" ref="jedisPoolConfig"/>
+        <constructor-arg index="1">
+            <list>
+                <bean class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="127.0.0.1"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+                <bean class="redis.clients.jedis.JedisShardInfo">
+                    <constructor-arg name="host" value="127.0.0.1"/>
+                    <constructor-arg name="port" value="6379"/>
+                </bean>
+            </list>
+        </constructor-arg>
+    </bean>
+
+
+
+
+
+
+    <!--
+        TN使用redis - 见TN代码
+    -->
 </beans>
