@@ -46,6 +46,12 @@
             <artifactId>spring-data-redis</artifactId>
             <version>1.8.13.RELEASE</version>
         </dependency>
+        <!--amq-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-core</artifactId>
+            <version>5.7.0</version>
+        </dependency>
     </dependencies>
 
 </project>
