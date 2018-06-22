@@ -150,6 +150,7 @@ public class AmqSimpleDemo {
                     }
                 }
             });
+            // 需要增加睡眠，防止到阿里云连接时间过长，程序已经结束了
             Thread.sleep(5000);
 
             // 6.关闭
