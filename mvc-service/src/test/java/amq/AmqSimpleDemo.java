@@ -84,6 +84,7 @@ public class AmqSimpleDemo {
         try {
             // 2.通过连接工厂获取连接
             connection = connectionFactory.createConnection();
+            connection.setClientID("Client-123456");  // 指定clientID用于持久化订阅
             connection.start();
 
             // 3.通过连接创建session
@@ -185,10 +186,10 @@ public class AmqSimpleDemo {
             // 2.通过连接工厂获取连接
             connection = connectionFactory.createConnection();
             connection.setClientID("Client-123456");  // 指定clientID用于持久化订阅
+            connection.start();
 
             // 3.通过连接创建session
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            connection.start();
 
             // 4.创建生产者，并指定目的地
             //MessageConsumer messageConsumer = session.createConsumer(destinationTopic);

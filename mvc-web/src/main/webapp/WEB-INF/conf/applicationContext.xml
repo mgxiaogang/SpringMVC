@@ -40,4 +40,5 @@
     <!--dubbo配置，需要使用的时候请打开-->
     <!--<import resource="classpath*:spring/spring-dubbo-provider.xml"></import>-->
     <import resource="classpath*:spring/spring-redis.xml"></import>
+    <import resource="classpath*:spring/spring-amq.xml"></import>
 </beans>

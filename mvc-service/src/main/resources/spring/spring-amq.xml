@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+       xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+					http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+    <!--1.定义ActiveMQ服务厂商提供的连接工厂 ，这才是真正实现JMS的-->
+    <amq:connectionFactory
+            id="amqConnectionFactory"
+            brokerURL="failover://(tcp://116.62.225.170:61616)?randomize=false&amp;jms.useAsyncSend=true&amp;timeout=10000"
+            userName="admin"
+            password="admin"/>
+
+    <!--2.定义Spring内部的连接工厂，并引用上面的AMQ的连接工厂-->
+    <!--
+        SingleConnectionFactory：对于建立JMS服务器链接的请求会一直返回同一个链接
+        CachingConnectionFactory：继承了SingleConnectionFactory，拥有前者的所有功能，同时它新增了缓存
+        PooledConnectionFactory：AMQ自带的，功能同上
+    -->
+    <!--代码等同-->
+    <!--<bean id="1connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory">
+            <bean class="org.apache.activemq.ActiveMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>failover://(tcp://116.62.225.170:61616)?randomize=false&amp;jms.useAsyncSend=true</value>
+                </property>
+            </bean>
+        </property>
+    </bean>-->
+    <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+        <property name="targetConnectionFactory" ref="amqConnectionFactory"/>
+        <property name="sessionCacheSize" value="1"/>
+        <property name="clientId" value="liupeng-amq-test-hz"/>
+    </bean>
+
+
+    <!--3.1定义生产者队列（Queue类型）-->
+    <bean id="testQueue1" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="testQueue1"></constructor-arg>
+    </bean>
+    <bean id="testQueue2" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg index="0" value="testQueue2"></constructor-arg>
+    </bean>
+    <!--3.1定义生产者队列（Topic类型）-->
+    <bean id="testTopic1" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="testTopic1"></constructor-arg>
+    </bean>
+    <bean id="testTopic2" class="org.apache.activemq.command.ActiveMQTopic">
+        <constructor-arg index="0" value="testTopic2"></constructor-arg>
+    </bean>
+
+
+    <!--4.1定义JmsTemplate（Queue类型）-->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestinationName" value="testQueueDefault"/>
+        <property name="deliveryPersistent" value="true"/>
+        <property name="pubSubDomain" value="false"/> <!-- false p2p,true topic -->
+        <property name="sessionAcknowledgeMode" value="1"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="timeToLive" value="604800000"/>
+    </bean>
+    <!--4.2定义JmsTemplate（Topic类型）-->
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="defaultDestinationName" value="topicTest"/>
+        <property name="deliveryPersistent" value="true"/>
+        <property name="pubSubDomain" value="true"/> <!-- false p2p,true topic -->
+        <property name="sessionAcknowledgeMode" value="1"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="timeToLive" value="604800000"/>
+        <property name="deliveryMode" value="2"/> <!-- 持久化标识 -->
+    </bean>
+
+
+    <!-- 事务管理器 -->
+    <bean id="jmsTransactionManager" class="org.springframework.jms.connection.JmsTransactionManager">
+        <property name="connectionFactory" ref="amqConnectionFactory"/>
+    </bean>
+
+
+    <bean id="testQueueConsumer" class="com.liupeng.spring.amq.consumer.TestQueueConsumer"/>
+    <bean id="testTopicConsumer" class="com.liupeng.spring.amq.consumer.TestTopicConsumer"/>
+    <!-- 5.1消费者（Queue类型） -->
+    <jms:listener-container
+            destination-type="queue"
+            container-type="default"
+            connection-factory="connectionFactory"
+            acknowledge="transacted" transaction-manager="jmsTransactionManager">
+        <jms:listener destination="testQueue1" ref="testQueueConsumer" method="onMessage"/>
+    </jms:listener-container>
+    <!-- 5.2消费者（Topic类型） -->
+    <jms:listener-container
+            destination-type="durableTopic"
+            container-type="default"
+            connection-factory="connectionFactory"
+            client-id="liupeng-amq-test-hz"
+            acknowledge="auto">
+        <jms:listener destination="testTopic1" subscription="test-topic-consumer-hz" ref="testTopicConsumer"
+                      method="onMessage"/>
+    </jms:listener-container>
+</beans>
