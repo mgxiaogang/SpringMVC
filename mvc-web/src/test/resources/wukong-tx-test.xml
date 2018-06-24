@@ -10,4 +10,6 @@
 
     <context:annotation-config/>
     <import resource="classpath*:spring/sql-httpclient.xml"/>
+
+    <bean id="okHttpClientTest" class="com.liupeng.spring.httpclient.OKHttpClientTest"></bean>
 </beans>

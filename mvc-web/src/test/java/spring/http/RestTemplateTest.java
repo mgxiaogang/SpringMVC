@@ -1,3 +1,5 @@
+package spring.http;
+
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +24,7 @@ import vo.User;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:wukong-tx-test.xml")
-public class WebTest {
+public class RestTemplateTest {
     private static final String URL = "http://localhost:8088/springBoot/helloworld1?username={username}";
 
     @Autowired

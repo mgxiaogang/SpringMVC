@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/amq")
 public class AmqProviderController {
 
-    @Autowired
+    /*@Autowired
     private AmqQueueSender amqQueueSender;
 
     @RequestMapping(value = "/testQueue", method = RequestMethod.GET)
@@ -25,5 +25,5 @@ public class AmqProviderController {
     @RequestMapping(value = "/testTopic", method = RequestMethod.GET)
     public void testTopic() {
         amqQueueSender.sendTopic(1, "liupeng");
-    }
+    }*/
 }
