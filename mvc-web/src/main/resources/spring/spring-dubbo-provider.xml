@@ -8,7 +8,7 @@
                     http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
     <!--dubbo提供者和消费者都有的配置-->
-    <dubbo:application name="demotest-consumer" owner="programmer" organization="dubbox"/>
+    <dubbo:application name="demotest-provoder" owner="programmer" organization="dubbox"/>
     <dubbo:registry address="zookeeper://localhost:2181"/>
     <dubbo:protocol name="dubbo" port="20880"/>
 
@@ -16,10 +16,4 @@
     <!--dubbo提供提供者配置-->
     <bean id="helloService" class="com.liupeng.Dubbo.service.DemoServiceImpl"></bean>
     <dubbo:service interface="com.alibaba.dubbo.demo.DemoService" ref="helloService" protocol="dubbo"/>
-
-    <!-- 注册中心自动查找监控服务 -->
-    <dubbo:monitor protocol="registry"/>
-
-    <!--dubbo消费者配置-->
-    <!--<dubbo:reference interface="com.liupeng.Dubbo.service.DubboHelloService"/>-->
 </beans>
