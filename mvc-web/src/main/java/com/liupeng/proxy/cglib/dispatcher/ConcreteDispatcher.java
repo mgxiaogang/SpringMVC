@@ -1,4 +1,4 @@
-package com.liupeng.proxy.cglib;
+package com.liupeng.proxy.cglib.dispatcher;
 
 import net.sf.cglib.proxy.Dispatcher;
 import net.sf.cglib.proxy.Enhancer;

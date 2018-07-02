@@ -1,4 +1,4 @@
-package com.liupeng.proxy.cglib;
+package com.liupeng.proxy.cglib.beanGenerator;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;

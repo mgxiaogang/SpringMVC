@@ -1,4 +1,4 @@
-package com.liupeng.proxy.cglib;
+package com.liupeng.proxy.cglib.lazyLoader;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.LazyLoader;
