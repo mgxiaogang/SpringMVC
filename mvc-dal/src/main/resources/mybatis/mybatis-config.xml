@@ -3,13 +3,7 @@
         "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <!--<settings>
-        <setting name="logImpl" value="SLF4J"/>
-    </settings>-->
-    <!--<typeAliases>
-        <package name="com.alibaba.wukong.dal.dataobject"/>
-        <package name="com.alibaba.wukong.dal.query.engine"/>
-    </typeAliases>-->
+    <!--类型别名-->
     <typeAliases>
         <typeAlias alias="User" type="com.liupeng.dto.User"></typeAlias>
     </typeAliases>
