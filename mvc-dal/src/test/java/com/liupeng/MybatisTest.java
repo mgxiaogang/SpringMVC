@@ -14,6 +14,9 @@ import org.junit.Test;
  */
 public class MybatisTest {
 
+    /**
+     * mybatis一级缓存测试：一个SqlSession 关闭 看是否还能走一级缓存
+     */
     @Test
     public void testCache1() {
         // 获取SqlSession，查DB
@@ -39,6 +42,9 @@ public class MybatisTest {
         System.out.println(users); // 又重新从DB查了 -> 丢缓存
     }
 
+    /**
+     * mybatis二级缓存测试：两个SqlSession commit第一个 看是否走二级缓存
+     */
     @Test
     public void testCache2() {
         // 开启两个不同的SqlSession
