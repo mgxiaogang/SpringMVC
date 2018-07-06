@@ -77,6 +77,7 @@ public class DataSourceAspect implements Ordered {
 
     /**
      * 控制顺序,在事务aop前加载
+     * 先切数据源，再进入事务
      *
      * @return order
      */

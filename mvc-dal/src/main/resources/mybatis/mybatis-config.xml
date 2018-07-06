@@ -8,6 +8,7 @@
         <typeAlias alias="User" type="com.liupeng.dto.User"></typeAlias>
     </typeAliases>
 
+
     <!--
         plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
         properties?, settings?,
@@ -22,4 +23,20 @@
             <property name="helperDialect" value="mysql"/>
         </plugin>
     </plugins>
+
+    <!--原生使用mybatis是才会用到的配置-->
+    <!--<environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/liupeng"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mybatis/mapper/user/User.xml"/>
+    </mappers>-->
 </configuration>

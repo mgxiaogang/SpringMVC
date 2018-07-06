@@ -1,5 +1,7 @@
 package com.liupeng.dto;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Table;
 
@@ -9,7 +11,7 @@ import javax.persistence.Table;
  * @date 2018/2/8
  */
 @Table(name = "user")
-public class User extends BaseDO {
+public class User extends BaseDO implements Serializable {
 
     @Column(name = "name")
     private String name;
