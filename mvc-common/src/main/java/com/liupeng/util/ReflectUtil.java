@@ -1,6 +1,7 @@
 package com.liupeng.util;
 
 import java.beans.PropertyDescriptor;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Map;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,62 @@ import org.slf4j.LoggerFactory;
  */
 public class ReflectUtil {
     private static final Logger LOG = LoggerFactory.getLogger(ReflectUtil.class);
+
+    /**
+     * 返回类中名称为name的公用方法定义
+     *
+     * @param clazz 类类型
+     * @param name  函数名
+     * @return 函数对象
+     */
+    public static Method getMethod(Class<?> clazz, String name) {
+        Method[] methods = clazz.getMethods();
+        if (methods != null && methods.length > 0) {
+            for (Method m : methods) {
+                if (m.getName().equals(name)) {
+                    return m;
+                }
+            }
+        }
+        methods = clazz.getDeclaredMethods();
+        if (methods != null && methods.length > 0) {
+            for (Method m : methods) {
+                if (m.getName().equals(name)) {
+                    return m;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 从对象中获取指定注解
+     *
+     * @param clazz           对象类型
+     * @param annotationClazz 注解类型
+     * @param <T>             返回值类型
+     * @return 返回
+     */
+    public static <T extends Annotation> T getClassAnnotation(Class<?> clazz, Class<T> annotationClazz) {
+        T annotation = clazz.getAnnotation(annotationClazz);
+        if (annotation != null) {
+            return annotation;
+        }
+        // 将所有的接口纳入查找范围
+        Class<?>[] classes = clazz.getInterfaces();
+        // 将父类也纳入到查找范围
+        classes = (Class<?>[])ArrayUtils.add(classes, clazz.getSuperclass());
+        for (Class<?> cls : classes) {
+            try {
+                annotation = getClassAnnotation(cls, annotationClazz);
+                if (annotation != null) {
+                    return annotation;
+                }
+            } catch (Exception e) {
+            }
+        }
+        return null;
+    }
 
     /**
      * 获取指定类的所有声明的字段，包括父类
@@ -80,7 +138,22 @@ public class ReflectUtil {
             }
         } catch (Exception e) {
             LOG.error("getFieldByName error.", e);
-            return null;
+            try {
+                Field field = getFieldByFieldName(t, fieldName);
+                Object value = null;
+                if (field != null) {
+                    if (field.isAccessible()) {
+                        value = field.get(t);
+                    } else {
+                        field.setAccessible(true);
+                        value = field.get(t);
+                        field.setAccessible(false);
+                    }
+                }
+                return value;
+            } catch (Exception ex) {
+                System.out.println("诶，还是错");
+            }
         }
         return null;
     }
@@ -143,6 +216,21 @@ public class ReflectUtil {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /**
+     * 根据属性名称设置属性值
+     */
+    public static void setValueByFieldName(Object obj, String fieldName, Object value) throws SecurityException,
+        NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        Field field = obj.getClass().getDeclaredField(fieldName);
+        if (field.isAccessible()) {
+            field.set(obj, value);
+        } else {
+            field.setAccessible(true);
+            field.set(obj, value);
+            field.setAccessible(false);
+        }
     }
 
     public static class ReflectTest extends ReflectSuperTest {

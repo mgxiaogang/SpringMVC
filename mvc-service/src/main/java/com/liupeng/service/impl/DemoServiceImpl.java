@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 import com.liupeng.dao.user.UserMapper;
+import com.liupeng.datasource.plugin.Pagination;
 import com.liupeng.dto.User;
 import com.liupeng.service.IDemoService;
 import com.liupeng.spring.dynamicdatasource.DataSource;
@@ -31,5 +32,15 @@ public class DemoServiceImpl implements IDemoService {
         map.put("pageSize", 5);
         List<User> list = userMapper.queryByPage(map);
         System.out.println(str + ",test");
+    }
+
+    @Override
+    public void say1(String name) {
+        Map<String, Integer> param = Maps.newHashMap();
+        Pagination rowBounds = new Pagination();
+        rowBounds.setCurrentPage(1);
+        rowBounds.setPageSize(10);
+        List<User> list = userMapper.queryByRowBounds(param, rowBounds);
+        System.out.println(list);
     }
 }

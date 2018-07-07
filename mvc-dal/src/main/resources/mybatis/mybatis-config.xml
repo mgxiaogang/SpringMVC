@@ -23,8 +23,11 @@
         </plugin>
 
         <!--自定义分页拦截器-->
-        <plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor">
-            <property name="limit" value="10"/>
+        <!--<plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor">-->
+            <!--<property name="limit" value="10"/>-->
+            <!--<property name="dbType" value="mysql"/>-->
+        <!--</plugin>-->
+        <plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor1">
             <property name="dbType" value="mysql"/>
         </plugin>
     </plugins>

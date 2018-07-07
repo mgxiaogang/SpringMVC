@@ -16,6 +16,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.liupeng.mvc</groupId>
+            <artifactId>mvc-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>tk.mybatis</groupId>
             <artifactId>mapper</artifactId>
         </dependency>

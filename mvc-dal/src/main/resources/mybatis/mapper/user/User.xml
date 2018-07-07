@@ -30,4 +30,12 @@
         FROM USER
     </select>
 
+    <select id="queryByRowBounds" resultType="com.liupeng.dto.User">
+        SELECT
+        id,
+        age,
+        name
+        FROM USER
+    </select>
+
 </mapper>

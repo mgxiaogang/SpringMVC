@@ -23,6 +23,6 @@ public class DemoController {
     @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseBody
     public void test() {
-        demoService.say("刘鹏");
+        demoService.say1("刘鹏");
     }
 }
