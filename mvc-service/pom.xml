@@ -54,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-all</artifactId>
+            <artifactId>activemq-pool</artifactId><!-- activemq-all会和logback配置冲突：https://blog.csdn.net/lxxxzzl/article/details/39584017 -->
             <version>5.11.4</version>
         </dependency>
         <dependency>

@@ -178,11 +178,11 @@
                 <artifactId>logback-ext-spring</artifactId>
                 <version>0.1.4</version>
             </dependency>
-            <dependency>
+            <!--<dependency>
                 <groupId>apache-log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>999-not-exist</version>
-            </dependency>
+            </dependency>-->
             <!--<dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
@@ -193,11 +193,11 @@
                 <artifactId>jakarta.log4j</artifactId>
                 <version>999-not-exist-v3</version>
             </dependency>-->
-            <dependency>
+            <!--<dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>1.2.17</version>
-            </dependency>
+            </dependency>-->
             <!-- ************************************************* -->
             <!-- 日志及相关依赖（用slf4j+logback代替jcl+log4j） end -->
             <!-- ************************************************* -->
@@ -519,6 +519,16 @@
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
             <version>0.9</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

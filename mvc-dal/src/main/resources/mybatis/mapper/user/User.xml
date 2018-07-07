@@ -22,4 +22,12 @@
         FROM USER
     </select>
 
+    <select id="queryByPage" resultType="User">
+        SELECT
+        id,
+        age,
+        name
+        FROM USER
+    </select>
+
 </mapper>

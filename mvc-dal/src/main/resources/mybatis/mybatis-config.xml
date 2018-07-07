@@ -11,16 +11,21 @@
 
     <!--
         plugins在配置文件中的位置必须符合要求，否则会报错，顺序如下:
-        properties?, settings?,
-        typeAliases?, typeHandlers?,
-        objectFactory?,objectWrapperFactory?,
+        properties?, settings?,typeAliases?, typeHandlers?,objectFactory?,objectWrapperFactory?,
         plugins?,
         environments?, databaseIdProvider?, mappers?
     -->
     <plugins>
+        <!--google pageheler分页拦截器-->
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
             <property name="reasonable" value="true"/>
             <property name="helperDialect" value="mysql"/>
+        </plugin>
+
+        <!--自定义分页拦截器-->
+        <plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor">
+            <property name="limit" value="10"/>
+            <property name="dbType" value="mysql"/>
         </plugin>
     </plugins>
 
