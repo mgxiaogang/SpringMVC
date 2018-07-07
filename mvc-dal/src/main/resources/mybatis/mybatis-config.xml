@@ -23,13 +23,16 @@
         </plugin>
 
         <!--自定义分页拦截器-->
-        <!--<plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor">-->
-            <!--<property name="limit" value="10"/>-->
-            <!--<property name="dbType" value="mysql"/>-->
-        <!--</plugin>-->
-        <plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor1">
+        <plugin interceptor="com.liupeng.datasource.plugin.PageInterceptor">
+            <property name="limit" value="10"/>
             <property name="dbType" value="mysql"/>
         </plugin>
+        <!--<plugin interceptor="com.liupeng.datasource.plugin.mePlugin.PageInterceptorMe">-->
+            <!--<property name="default.page" value="1"/>-->
+            <!--<property name="default.pageSize" value="10"/>-->
+            <!--<property name="default.useFlag" value="true"/>-->
+            <!--<property name="default.checkFlag" value="true"/>-->
+        <!--</plugin>-->
     </plugins>
 
     <!--原生使用mybatis是才会用到的配置-->

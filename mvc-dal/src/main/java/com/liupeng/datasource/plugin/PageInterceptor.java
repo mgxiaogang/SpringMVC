@@ -17,20 +17,15 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 
 /**
  * mybatis分页拦截器
+ * 原理：https://blog.csdn.net/chenbaige/article/details/70846902
  *
  * @author fengdao.lp
  * @date 2018/7/7
  */
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class})})
 public class PageInterceptor implements Interceptor {
-    private Integer pageSize;
     private Integer currentPage;
-
-    /**
-     * 拦截以ByPage结尾的mapper中方法的调用
-     */
-    private String pageParam = "ByPage";
-
+    private Integer pageSize;
     /**
      * 过虑参数
      */
@@ -38,29 +33,33 @@ public class PageInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
+        // 获取StatementHandler，默认是RoutingStatementHandler
         StatementHandler statementHandler = (StatementHandler)invocation.getTarget();
+        // 获取statementHandler包装类
         MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
 
+        // 分离代理对象链
         while (metaObject.hasGetter("h")) {
             Object o = metaObject.getValue("h");
             metaObject = SystemMetaObject.forObject(o);
         }
-
         while (metaObject.hasGetter("target")) {
             Object o = metaObject.getValue("target");
             metaObject = SystemMetaObject.forObject(o);
         }
 
+        // 获取查询接口映射的相关信息
         MappedStatement mappedStatement = (MappedStatement)metaObject.getValue("delegate.mappedStatement");
         String mapId = mappedStatement.getId();
-        // 拦截ByCount结尾的方法，计算总数
+
+        // 拦截以.ByCount结尾的请求，计算总数
         if (mapId.matches(".+ByCount$")) {
             String sql = (String)metaObject.getValue("delegate.boundSql.sql");
             String filterSql = sql + " " + filterParam;
             metaObject.setValue("delegate.boundSql.sql", filterSql);
         }
-        // 动态替换sql语句，这里才是真正需要执行的sql语句
-        else if (mapId.matches(".+" + pageParam + "$")) {
+        // 拦截以.ByPage结尾的请求
+        else if (mapId.matches(".+" + "ByPage" + "$")) {
             ParameterHandler parameterHandler = (ParameterHandler)metaObject.getValue("delegate.parameterHandler");
             Map<String, Object> paramObject = (Map<String, Object>)parameterHandler.getParameterObject();
             currentPage = (Integer)paramObject.get("currentPage");

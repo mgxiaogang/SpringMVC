@@ -8,4 +8,6 @@ public interface IDemoService {
     void say(String str);
 
     void say1(String name);
+
+    void say2();
 }

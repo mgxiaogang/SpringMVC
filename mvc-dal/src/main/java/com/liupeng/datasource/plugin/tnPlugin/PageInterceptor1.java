@@ -1,4 +1,4 @@
-package com.liupeng.datasource.plugin;
+package com.liupeng.datasource.plugin.tnPlugin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
