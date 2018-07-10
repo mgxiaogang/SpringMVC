@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 /**
  * @author fengdao.lp
  * @date 2018/7/10
+ * @since jdk 1.8
  */
 public class Stream {
 
