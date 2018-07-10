@@ -28,13 +28,13 @@ public class DynamicProxyHello<s> implements InvocationHandler {
         //反射得到操作者的Start方法
         Method start = this.proxy.getDeclaredMethod("start", new Class[] {Method.class});
         //反射执行start方法
-        start.invoke(this.proxy, new Object[] {method});
+        start.invoke(this.proxy.newInstance(), new Object[] {method});
         //执行要处理对象的原本方法
         method.invoke(this.targetClass.newInstance(), args);
         //反射得到操作者的end方法
         Method end = this.proxy.getDeclaredMethod("end", new Class[] {Method.class});
         //反射执行end方法
-        end.invoke(this.proxy, new Object[] {method});
+        end.invoke(this.proxy.newInstance(), new Object[] {method});
         return result;
     }
 
@@ -48,7 +48,7 @@ public class DynamicProxyHello<s> implements InvocationHandler {
 
     public static void main(String[] args) throws Exception {
         DynamicProxyHello<IHello> proxyHandler = new DynamicProxyHello<>();
-        IHello people = proxyHandler.createProxyInstance(Hello.class, new DLogger());
+        IHello people = proxyHandler.createProxyInstance(Hello.class, DLogger.class);
         people.sayHello("liupeng");
     }
 }
