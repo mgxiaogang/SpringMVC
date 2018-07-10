@@ -16,4 +16,18 @@
             </list>
         </property>
     </bean>
+
+    <!--自动代理BeanNameAutoProxyCreator-->
+    <!--<bean id="autoProxy" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>sqlExecutorServiceImpl</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>sqlExecutorAdvice</value>
+            </list>
+        </property>
+    </bean>-->
 </beans>

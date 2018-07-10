@@ -113,4 +113,5 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <import resource="classpath:spring/spring-aop.xml"></import>
 </beans>
