@@ -19,10 +19,10 @@ public class EnumTest {
 
     @Test
     public void test() {
-        Map<String,String> map1 = enumUtil.getEnumWithKey("tag_a");
+        Map<String, String> map1 = enumUtil.getEnumWithKey("tag_a");
         System.out.println(map1);
 
-        Map<String,String> map2 = enumUtil.getEnumWithKeyAndTagValue("tag_a",1);
+        Map<String, String> map2 = enumUtil.getEnumWithKeyAndTagValue("tag_a", 1);
         System.out.println(map2);
     }
 }
