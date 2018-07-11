@@ -41,4 +41,7 @@
     <!--<import resource="classpath*:spring/spring-dubbo-provider.xml"></import>-->
     <import resource="classpath*:spring/spring-redis.xml"></import>
     <import resource="classpath*:spring/spring-amq.xml"></import>
+
+    <!--common工程-->
+    <import resource="classpath*:common-util.xml"></import>
 </beans>
