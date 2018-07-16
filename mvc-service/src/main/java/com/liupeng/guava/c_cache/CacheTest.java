@@ -1,4 +1,4 @@
-package com.liupeng.guava.cache;
+package com.liupeng.guava.c_cache;
 
 import java.util.Date;
 import java.util.concurrent.Callable;
@@ -58,7 +58,7 @@ public class CacheTest {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         //testCache();
-        testCacheLoader();
+        //testCacheLoader();
         testCallable();
     }
 
@@ -87,6 +87,7 @@ public class CacheTest {
      */
     private static void testCacheLoader() throws ExecutionException {
         CACHE_1.put(1, "test");
+        System.out.println(CACHE_1.get(1));
         String value1 = CACHE_1.get(2);
         System.out.println(value1);
         String value2 = CACHE_1.get(2);

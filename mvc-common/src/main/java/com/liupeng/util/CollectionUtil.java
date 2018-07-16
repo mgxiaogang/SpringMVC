@@ -11,6 +11,9 @@ import org.apache.commons.collections.Transformer;
  * @date 2018/7/11
  */
 public class CollectionUtil {
+    /**
+     * 类型转换
+     */
     public static void stringtoInteger() {
         List<String> list = Lists.newArrayList("1", "2");
         List<Integer> result = Lists.newArrayList();
