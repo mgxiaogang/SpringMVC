@@ -1,4 +1,4 @@
-package com.liupeng.concurrent;
+package com.liupeng.concurrent.自增ID;
 
 /**
  * @author fengdao.lp

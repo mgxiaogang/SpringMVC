@@ -25,5 +25,6 @@ public interface Feature1_interface {
         };
         System.out.println(feature1_interface.calculate(10));
         System.out.println(feature1_interface.calculate(20));
+        System.out.println(feature1_interface.sqrt(10));
     }
 }

@@ -1,4 +1,4 @@
-package com.liupeng.concurrent;
+package com.liupeng.concurrent.自增ID;
 
 /**
  * 变量i，10个线程分别对其加10次，最后结果应i为100
