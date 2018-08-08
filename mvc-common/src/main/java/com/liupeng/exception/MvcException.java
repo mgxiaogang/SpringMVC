@@ -1,7 +1,7 @@
 package com.liupeng.exception;
 
 /**
- * 异常类
+ * 异常父类
  *
  * @author fengdao.lp
  * @date 2018/3/13
@@ -29,6 +29,11 @@ public class MvcException extends RuntimeException {
     public MvcException(ExceptionCode exceptionCode, Throwable cause, Object... args) {
         super(formatMessage(exceptionCode, args), cause);
         this.exceptionCode = exceptionCode;
+    }
+
+    public MvcException setExceptionCode(ExceptionCode exceptionCode) {
+        this.exceptionCode = exceptionCode;
+        return this;
     }
 
     /**
