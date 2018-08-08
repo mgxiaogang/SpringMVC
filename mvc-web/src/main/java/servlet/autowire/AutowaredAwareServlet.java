@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import servlet.demo.TestServlet;
+import servlet.session.TestServlet;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

@@ -17,6 +17,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!--session监听器-->
+    <listener>
+        <listener-class>servlet.listener.MySessionListener</listener-class>
+    </listener>
+
     <!--
         Spring session配置
         1.每个客户端请求经过 DelegatingFilterProxy 过滤
@@ -100,7 +105,7 @@
     <!--servlet-->
     <servlet>
         <servlet-name>FirstServlet</servlet-name>
-        <servlet-class>servlet.demo.TestServlet</servlet-class>
+        <servlet-class>servlet.session.TestServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>FirstServlet</servlet-name>
@@ -113,6 +118,14 @@
     <servlet-mapping>
         <servlet-name>AutowaredServlet</servlet-name>
         <url-pattern>/autowaredServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CookieDemo01Servlet</servlet-name>
+        <servlet-class>servlet.cookie.CookieDemo01</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CookieDemo01Servlet</servlet-name>
+        <url-pattern>/cookie</url-pattern>
     </servlet-mapping>
 
 
