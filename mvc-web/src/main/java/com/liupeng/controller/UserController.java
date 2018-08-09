@@ -72,7 +72,7 @@ public class UserController {
     @RequestMapping(value = "/queryUser", method = RequestMethod.GET)
     @ResponseBody
     public void test() {
-        LOG.info("testxufan");
+        LOG.info("testjiangjing");
         System.out.println(superMan);
         List<User> user = userService.queryAll();
         LOG.info(user.toString());
@@ -84,7 +84,7 @@ public class UserController {
         // 新增
         User user1 = new User();
         user1.setAge(21);
-        user1.setName("xufan");
+        user1.setName("jiangjing");
         //userService.insert(user1);
 
         // 查询一条记录
