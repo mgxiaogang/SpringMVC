@@ -33,20 +33,21 @@ public class ShardingJdbcMybatisTest {
     private StudentService studentService;
 
     /**
-     * route sql to db: [sharding_1] sql: [INSERT INTO t_user_01 (user_id, name, age) VALUES (?, ?, ?)]
-     * route sql to db: [sharding_0] sql: [INSERT INTO t_user_02 (user_id, name, age) VALUES (?, ?, ?)]
+     * After database sharding t_user result: [sharding_0]
+     * After table sharding t_user result: [t_user_02]
      */
     @Test
     public void testTeacherInsert() {
         Teacher teacher = new Teacher();
-        teacher.setUserId(1);
+        teacher.setUserId(2);
         teacher.setAge(26);
         teacher.setName("liupeng");
         Assert.assertEquals(teacherService.insert(teacher), true);
     }
 
     /**
-     * route sql to db: [sharding_1] sql: [INSERT INTO t_student_01 (student_id, name, age) VALUES (?, ?, ?)]
+     * After database sharding t_student result: [sharding_1]
+     * After table sharding t_student result: [t_student_01]
      */
     @Test
     public void testStudentInsert() {

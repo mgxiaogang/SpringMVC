@@ -19,7 +19,7 @@ import com.google.common.collect.Range;
  */
 public class TeacherSingleKeyTableShardingAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
 
-    private int dbCount = 1;
+    private int dbCount = 3;
 
     /**
      * sql 中 = 操作时，table的映射

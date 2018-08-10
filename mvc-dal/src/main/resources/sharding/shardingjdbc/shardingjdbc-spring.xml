@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.dangdang.com/schema/ddframe/rdb http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
 
     <!-- 自动扫描,applicationContext.xml中存在了 -->
     <context:component-scan base-package="com.liupeng"/>
@@ -19,10 +20,41 @@
         <property name="mapperLocations" value="classpath:sharding/shardingjdbc/mapper/*Mapper.xml"/>
     </bean>
 
-    <!-- 对datasource进行封装 -->
-    <bean id="shardingDataSource" class="com.dangdang.ddframe.rdb.sharding.api.ShardingDataSource">
-        <constructor-arg ref="shardingRule"/>
-    </bean>
+
+    <!--分库策略:按照user_id分库 eg.algorithm-expression="ds_${user_id % 2}"-->
+    <!--如果分成2库6表，则每个库里有三个表，则配置成：algorithm-expression="dbtbl_${(id.longValue() / 3).longValue() % 2}"-->
+    <rdb:strategy id="userDatabaseStrategy" sharding-columns="user_id"
+                  algorithm-class="com.liupeng.sharding.shardingjdbc.algorithm.TeacherSingleKeyDatabaseShardingAlgorithm"/>
+    <rdb:strategy id="studentDatabaseStrategy" sharding-columns="student_id"
+                  algorithm-class="com.liupeng.sharding.shardingjdbc.algorithm.TeacherSingleKeyDatabaseShardingAlgorithm"/>
+    <!--分表策略：按照user_id分表 eg.algorithm-expression="t_order_${order_id % 2}"-->
+    <rdb:strategy id="userTableStrategy" sharding-columns="user_id"
+                  algorithm-class="com.liupeng.sharding.shardingjdbc.algorithm.TeacherSingleKeyTableShardingAlgorithm"/>
+    <rdb:strategy id="studentTableStrategy" sharding-columns="student_id"
+                  algorithm-class="com.liupeng.sharding.shardingjdbc.algorithm.StudentSingleKeyTableShardingAlgorithm"/>
+
+    <!--数据源-->
+    <rdb:data-source id="shardingDataSource">
+        <rdb:sharding-rule data-sources="sharding_0,sharding_1" default-data-source="sharding_0">
+            <rdb:table-rules>
+                <!--t_user_0${0..2}-->
+                <rdb:table-rule logic-table="t_user" actual-tables="t_user_00,t_user_01,t_user_02"
+                                database-strategy="userDatabaseStrategy" table-strategy="userTableStrategy"/>
+                <!--t_student_0${0..1}-->
+                <rdb:table-rule logic-table="t_student" actual-tables="t_student_00,t_student_01"
+                                database-strategy="studentDatabaseStrategy" table-strategy="studentTableStrategy"/>
+            </rdb:table-rules>
+            <!--<rdb:binding-table-rules>
+                <rdb:binding-table-rule logic-tables="t_user,t_student"/>
+            </rdb:binding-table-rules>-->
+            <rdb:default-database-strategy sharding-columns="none"
+                                           algorithm-class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.NoneDatabaseShardingAlgorithm"/>
+        </rdb:sharding-rule>
+        <rdb:props>
+            <prop key="metrics.enable">true</prop>
+        </rdb:props>
+    </rdb:data-source>
+
 
     <!-- 特定的事务管理器 -->
     <bean id="shardingTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -30,97 +62,4 @@
     </bean>
     <tx:annotation-driven transaction-manager="shardingTransactionManager"/>
 
-    <!-- 构成分库分表的规则 传入数据源集合和每个表的分库分表的具体规则 -->
-    <bean id="shardingRule" class="com.dangdang.ddframe.rdb.sharding.api.rule.ShardingRule">
-        <constructor-arg index="0" ref="dataSourceRule"/>
-        <constructor-arg index="1">
-            <list>
-                <ref bean="teacherTableRule"/>
-                <ref bean="studentTableRule"/>
-            </list>
-        </constructor-arg>
-    </bean>
-
-    <!-- 配置好dataSourceRulue,即对数据源进行管理 -->
-    <bean id="dataSourceRule" class="com.dangdang.ddframe.rdb.sharding.api.rule.DataSourceRule">
-        <constructor-arg>
-            <map>
-                <entry key="sharding_0" value-ref="sharding_0"/>
-                <entry key="sharding_1" value-ref="sharding_1"/>
-            </map>
-        </constructor-arg>
-    </bean>
-
-    <!-- 对t_user表的配置，进行分库配置，逻辑表名为t_user，每个库有实际的三张表 -->
-    <bean id="teacherTableRule" class="com.dangdang.ddframe.rdb.sharding.api.rule.TableRule">
-        <constructor-arg value="t_user" index="0"/>
-        <constructor-arg index="1">
-            <list>
-                <value>t_user_00</value>
-                <value>t_user_01</value>
-                <value>t_user_02</value>
-            </list>
-        </constructor-arg>
-        <constructor-arg index="2" ref="dataSourceRule"/>
-        <constructor-arg index="3" ref="teacherDatabaseShardingStrategy"/>
-        <constructor-arg index="4" ref="teacherTableShardingStrategy"/>
-    </bean>
-
-    <!-- t_user分库的sharding规则：按user_id分库 -->
-    <bean id="teacherDatabaseShardingStrategy"
-          class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingStrategy">
-        <constructor-arg index="0" value="user_id"/>
-        <constructor-arg index="1">
-            <bean class="com.liupeng.sharding.shardingjdbc.algorithm.TeacherSingleKeyDatabaseShardingAlgorithm">
-                <property name="dbCount" value="2"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <!-- t_user分表的sharding规则：按user_id分表 -->
-    <bean id="teacherTableShardingStrategy"
-          class="com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrategy">
-        <constructor-arg index="0" value="user_id"/>
-        <constructor-arg index="1">
-            <bean class="com.liupeng.sharding.shardingjdbc.algorithm.TeacherSingleKeyTableShardingAlgorithm">
-                <property name="dbCount" value="3"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <!-- 对t_student表的配置，进行分库配置，逻辑表名为t_student，每个库有实际的两张表 -->
-    <bean id="studentTableRule" class="com.dangdang.ddframe.rdb.sharding.api.rule.TableRule">
-        <constructor-arg value="t_student" index="0"/>
-        <constructor-arg index="1">
-            <list>
-                <value>t_student_00</value>
-                <value>t_student_01</value>
-            </list>
-        </constructor-arg>
-        <constructor-arg index="2" ref="dataSourceRule"/>
-        <constructor-arg index="3" ref="studentDatabaseShardingStrategy"/>
-        <constructor-arg index="4" ref="studentTableShardingStrategy"/>
-    </bean>
-
-    <!-- t_student分库的sharding规则：按student_id分开库 -->
-    <bean id="studentDatabaseShardingStrategy"
-          class="com.dangdang.ddframe.rdb.sharding.api.strategy.database.DatabaseShardingStrategy">
-        <constructor-arg index="0" value="student_id"/>
-        <constructor-arg index="1">
-            <bean class="com.liupeng.sharding.shardingjdbc.algorithm.StudentSingleKeyDatabaseShardingAlgorithm">
-                <property name="dbCount" value="2"/>
-            </bean>
-        </constructor-arg>
-    </bean>
-
-    <!-- t_student分表的sharding规则：按student_id分表 -->
-    <bean id="studentTableShardingStrategy"
-          class="com.dangdang.ddframe.rdb.sharding.api.strategy.table.TableShardingStrategy">
-        <constructor-arg index="0" value="student_id"/>
-        <constructor-arg index="1">
-            <bean class="com.liupeng.sharding.shardingjdbc.algorithm.StudentSingleKeyTableShardingAlgorithm">
-                <property name="dbCount" value="2"/>
-            </bean>
-        </constructor-arg>
-    </bean>
 </beans>

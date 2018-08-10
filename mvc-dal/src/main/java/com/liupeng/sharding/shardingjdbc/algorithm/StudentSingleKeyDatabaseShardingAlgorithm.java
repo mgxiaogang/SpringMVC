@@ -18,7 +18,7 @@ import com.google.common.collect.Range;
  */
 public class StudentSingleKeyDatabaseShardingAlgorithm implements SingleKeyDatabaseShardingAlgorithm<Integer> {
 
-    private int dbCount = 1;
+    private int dbCount = 2;
 
     /**
      * sql 中关键字 匹配符为 = 的时候，表的路由函数
