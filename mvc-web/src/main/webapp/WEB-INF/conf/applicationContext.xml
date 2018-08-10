@@ -44,4 +44,8 @@
 
     <!--common工程-->
     <import resource="classpath*:common-util.xml"></import>
+
+    <!--sharding-jdbc-->
+    <import resource="classpath*:sharding/shardingjdbc/shardingjdbc-datasource.xml"></import>
+    <import resource="classpath*:sharding/shardingjdbc/shardingjdbc-spring.xml"></import>
 </beans>

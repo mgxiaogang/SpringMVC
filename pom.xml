@@ -388,11 +388,12 @@
             <version>3.2.8</version>
         </dependency>
 
-        <!--druid-->
+        <!--druid，为了与sharding-jdbc配合，不能用太新的版本-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>1.1.9</version>
+            <version>1.0.27</version>
+            <!--<version>1.0.12</version>-->
         </dependency>
 
         <!-- mysql -->
@@ -555,6 +556,14 @@
             <artifactId>netty-all</artifactId>
             <version>5.0.0.Alpha2</version>
         </dependency>
+
+        <!-- sharding-jdbc,对druid版本有要求，注意 -->
+        <dependency>
+            <groupId>com.dangdang</groupId>
+            <artifactId>sharding-jdbc-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 

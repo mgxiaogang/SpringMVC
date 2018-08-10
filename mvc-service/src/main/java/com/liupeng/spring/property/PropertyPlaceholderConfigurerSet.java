@@ -69,10 +69,12 @@ public class PropertyPlaceholderConfigurerSet extends PropertyPlaceholderConfigu
         // maven profile指定了具体环境对应的配置文件到classpath下
         String path1 = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "*.properties";
         String path2 = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "config/test.properties";
+        String path3 = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + "sharding/shardingjdbc/jdbc_dev.properties";
         Resource[] resources1 = resourcePatternResolver.getResources(path1);
         Resource[] resources2 = resourcePatternResolver.getResources(path2);
+        Resource[] resources3 = resourcePatternResolver.getResources(path3);
         Resource[] resources = ArrayUtils.addAll(resources1, resources2);
-        super.setLocations(resources);
+        super.setLocations(ArrayUtils.addAll(resources, resources3));
         super.setFileEncoding("UTF-8");
     }
 
