@@ -69,8 +69,10 @@
         </mvc:return-value-handlers>
     </mvc:annotation-driven>
 
-
+    <!--spring3.1之前-->
+    <!--配置注解控制器映射器,它是SpringMVC中用来将Request请求URL到映射到具体Controller-->
     <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+    <!--配置注解控制器映射器,它是SpringMVC中用来将具体请求映射到具体方法-->
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
 
