@@ -1,6 +1,7 @@
-package com.liupeng.spring.beanFactory;
+package com.liupeng.spring.beanfactory;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -32,11 +33,11 @@ public class CacheBeansFactory implements ApplicationContextAware {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> T getBean(Class<T> targetClass, Object factor) {
+    public <T extends Supportable<K>, K> T getBean(Class<T> targetClass, K factor) {
         if (!beansCache.containsKey(targetClass)) {
             this.cacheBeanByType(targetClass);
         }
-        List<Supportable> supportables = beansCache.get(targetClass);
+        List<Supportable> supportables = beansCache.getOrDefault(targetClass, Collections.emptyList());
         List<Supportable> result = supportables.stream().filter(t -> t.supports(factor)).collect(Collectors.toList());
         if (CollectionUtils.isNotEmpty(result)) {
             return (T)result.get(0);

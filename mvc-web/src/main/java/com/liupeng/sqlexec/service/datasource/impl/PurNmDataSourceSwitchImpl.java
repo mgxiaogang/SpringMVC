@@ -22,22 +22,20 @@ public class PurNmDataSourceSwitchImpl implements IDataSourceSwitch {
         //}
     }
 
-    @Override
-    public boolean supports(Object object) {
-        boolean ret = false;
-        if (object instanceof String) {
-            if (dbNameExternal.equals(object)) {
-                ret = true;
-            }
-        }
-        return ret;
-    }
-
     /**
      * 人员操作权限，可在此处扩展
      */
     @Override
     public boolean checkManagerValid(int uid) {
         return true;
+    }
+
+    @Override
+    public boolean supports(String s) {
+        boolean ret = false;
+        if (dbNameExternal.equals(s)) {
+            ret = true;
+        }
+        return ret;
     }
 }

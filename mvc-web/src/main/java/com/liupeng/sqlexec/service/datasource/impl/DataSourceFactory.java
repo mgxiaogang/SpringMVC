@@ -1,6 +1,6 @@
 package com.liupeng.sqlexec.service.datasource.impl;
 
-import com.liupeng.spring.beanFactory.CacheBeansFactory;
+import com.liupeng.spring.beanfactory.CacheBeansFactory;
 import com.liupeng.sqlexec.service.datasource.IDataSourceFactory;
 import com.liupeng.sqlexec.service.datasource.IDataSourceSwitch;
 import org.springframework.beans.factory.annotation.Autowired;
