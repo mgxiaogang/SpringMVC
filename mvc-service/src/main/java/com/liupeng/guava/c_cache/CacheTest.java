@@ -40,6 +40,7 @@ public class CacheTest {
     private static final LoadingCache<Integer, String> CACHE_1 = CacheBuilder.newBuilder()
         // 给定时间内没有被读写则回收
         .refreshAfterWrite(3, TimeUnit.MINUTES)
+        // 设置缓存最大容量为1000，超过1000之后就会按照LRU最近虽少使用算法来移除缓存项
         .maximumSize(1000)
         .build(new CacheLoader<Integer, String>() {
             @Override
