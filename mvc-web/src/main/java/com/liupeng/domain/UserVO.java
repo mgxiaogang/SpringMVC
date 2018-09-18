@@ -1,8 +1,12 @@
 package com.liupeng.domain;
 
-import java.util.Date;
+import com.liupeng.validator.annotation.CollectionNotHasNullElement;
+import com.liupeng.validator.group.CommonGroups;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author fengdao.lp
@@ -12,12 +16,20 @@ public class UserVO {
 
     private int age;
 
-    @NotBlank(message = "名称不能为空")
+    @NotBlank(groups = CommonGroups.Save.class, message = "名称不能为空")
     private String name;
 
     private Date date;
 
-    public UserVO() {}
+    @NotNull(groups = {CommonGroups.Save.class, CommonGroups.Update.class}, message = "新增、修改时ids不能为空")
+    @CollectionNotHasNullElement.List({
+            @CollectionNotHasNullElement(groups = {CommonGroups.Save.class}, message = "新增时ids不能为空"),
+            @CollectionNotHasNullElement(groups = {CommonGroups.Update.class}, message = "修改时ids不能为空")
+    })
+    private List<Integer> ids;
+
+    public UserVO() {
+    }
 
     public UserVO(int age, String name, Date date) {
         this.age = age;
@@ -49,12 +61,21 @@ public class UserVO {
         this.date = date;
     }
 
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
+    }
+
     @Override
     public String toString() {
         return "UserVO{" +
-            "age=" + age +
-            ", name='" + name + '\'' +
-            ", date=" + date +
-            '}';
+                "age=" + age +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", ids=" + ids +
+                '}';
     }
 }
