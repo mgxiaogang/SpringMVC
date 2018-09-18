@@ -2,11 +2,13 @@ package com.liupeng.domain;
 
 import com.liupeng.validator.annotation.CollectionNotHasNullElement;
 import com.liupeng.validator.group.CommonGroups;
+import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
+
+//import javax.validation.constraints.NotBlank;
 
 /**
  * @author fengdao.lp
@@ -16,7 +18,7 @@ public class UserVO {
 
     private int age;
 
-    @NotBlank(groups = CommonGroups.Save.class, message = "名称不能为空")
+    @NotBlank(groups = CommonGroups.Update.class, message = "名称不能为空")
     private String name;
 
     private Date date;

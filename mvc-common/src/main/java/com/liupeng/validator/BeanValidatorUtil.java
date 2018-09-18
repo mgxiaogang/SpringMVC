@@ -35,7 +35,7 @@ public class BeanValidatorUtil {
     }
 
     /**
-     * 校验方法
+     * 分组校验方法
      *
      * @param t   待校验对象
      * @param <T> 类型
@@ -46,7 +46,7 @@ public class BeanValidatorUtil {
     }
 
     /**
-     * 处理教研结果集
+     * 处理校验结果集
      */
     private static <T> void assembleResult(Set<ConstraintViolation<T>> constraintViolations) {
         if (CollectionUtils.isNotEmpty(constraintViolations)) {
@@ -55,7 +55,7 @@ public class BeanValidatorUtil {
                 sb.append(constraintViolation.getMessage()).append(", ");
             }
             String message = sb.toString();
-            throw new MvcException(sb.toString());
+            throw new MvcException(message);
         }
     }
 }

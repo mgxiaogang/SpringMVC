@@ -18,11 +18,21 @@ import javax.validation.groups.Default;
 @RequestMapping(value = "/liupeng/validator")
 public class ValidatorController {
 
+    /**
+     * 貌似不启作用
+     *
+     * @param userVO 入参
+     */
     @RequestMapping(value = "/test1", method = RequestMethod.GET)
     public void test1(@Validated({CommonGroups.Save.class, Default.class}) UserVO userVO) {
         System.out.println(userVO.toString());
     }
 
+    /**
+     * http://localhost:8080/liupeng/validator/test1?name=liupeng
+     *
+     * @param userVO 入参
+     */
     @RequestMapping(value = "/test2", method = RequestMethod.GET)
     public void test2(UserVO userVO) {
         BeanValidatorUtil.validateByGroup(userVO, CommonGroups.Update.class);

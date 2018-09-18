@@ -12,7 +12,7 @@ import java.util.Objects;
 
 /**
  * 自定义异常校验
- *
+ * <p>
  * 必选:校验集合的每一个对象都不允许为空
  * 可选:集合只允许接收指定的整数
  */
@@ -36,7 +36,9 @@ public class CollectionNotHasNullElementValidator implements ConstraintValidator
             if (CollectionUtils.isNotEmpty(target)) {
                 return target.containsAll(value);
             }
+        } else {
+            return false;
         }
-        return false;
+        return true;
     }
 }

@@ -1,10 +1,5 @@
 package com.liupeng.advice;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.liupeng.domain.ExceptionTest;
 import com.liupeng.exception.MvcException;
 import org.slf4j.Logger;
@@ -17,6 +12,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author fengdao.lp
@@ -40,8 +39,8 @@ public class ExceptionHandlerControllerAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public void mvcExceptionHandler(HttpServletRequest request, HttpServletResponse response, MvcException e)
-        throws IOException {
-        logger.error("错误码为：" + e.getCode());
+            throws IOException {
+        logger.error("错误码为：" + e.getCode(), e);
         response.getWriter().write("error");
     }
 

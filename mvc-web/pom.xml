@@ -42,14 +42,22 @@
             1.javax.validation 只是一个协议
             2.还需要一个javax.validation的实现，比如hibernate-validator
         -->
+        <!--<dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>-->
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.hibernate.validator</groupId>-->
-            <!--<artifactId>hibernate-validator</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.github.tomakehurst</groupId>
@@ -86,7 +94,7 @@
                             <tasks>
                                 <unzip
                                         src="${project.build.directory}/${project.build.finalName}.${project.packaging}"
-                                        dest="${project.build.directory}/liupeng-mvc" />
+                                        dest="${project.build.directory}/liupeng-mvc"/>
                             </tasks>
                         </configuration>
                         <goals>
