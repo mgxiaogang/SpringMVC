@@ -1,13 +1,14 @@
 package com.liupeng.validator;
 
-import com.liupeng.exception.MvcException;
-import org.apache.commons.collections.CollectionUtils;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Set;
+
+import com.liupeng.exception.MvcException;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * Bean校验Util
@@ -31,31 +32,13 @@ public class BeanValidatorUtil {
      */
     public static <T> void validate(T t) {
         Set<ConstraintViolation<T>> constraintViolations = getValidator().validate(t);
-        assembleResult(constraintViolations);
-    }
-
-    /**
-     * 校验方法
-     *
-     * @param t   待校验对象
-     * @param <T> 类型
-     */
-    public static <T, K> void validateByGroup(T t, Class<K> clazz) {
-        Set<ConstraintViolation<T>> constraintViolations = getValidator().validate(t, clazz);
-        assembleResult(constraintViolations);
-    }
-
-    /**
-     * 处理教研结果集
-     */
-    private static <T> void assembleResult(Set<ConstraintViolation<T>> constraintViolations) {
         if (CollectionUtils.isNotEmpty(constraintViolations)) {
-            StringBuilder sb = new StringBuilder();
-            for (ConstraintViolation<T> constraintViolation : constraintViolations) {
-                sb.append(constraintViolation.getMessage()).append(", ");
-            }
-            String message = sb.toString();
-            throw new MvcException(sb.toString());
+            StringBuilder stringBuilder = new StringBuilder();
+            constraintViolations.forEach(result -> {
+                stringBuilder.append(result).append("#");
+            });
+            throw new MvcException(stringBuilder.toString());
         }
+
     }
 }
