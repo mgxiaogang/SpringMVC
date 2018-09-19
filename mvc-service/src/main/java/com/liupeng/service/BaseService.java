@@ -89,6 +89,7 @@ public abstract class BaseService<M extends BaseMapper<T>, T extends BaseDO> {
         PageHelper.startPage(1, 2);
         List<User> list = (List<User>)mapper.selectAll();
         System.out.println(list);
+        // 一定要用在mapper返回的对象
         return new PageInfo<>(list);
     }
 }

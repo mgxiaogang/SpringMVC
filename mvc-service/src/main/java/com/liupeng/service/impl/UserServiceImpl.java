@@ -25,6 +25,7 @@ public class UserServiceImpl extends BaseService<UserMapper, User> implements IU
         // PageHelper.startPage(1, 2, true); true表示进行count查询
         PageHelper.startPage(1, 2);
         List<User> list = userMapper.queryPerson();
+        // 一定要用在userMapper返回的对象
         PageInfo<User> pageInfo = new PageInfo<>(list);
         return pageInfo.getList();
     }
