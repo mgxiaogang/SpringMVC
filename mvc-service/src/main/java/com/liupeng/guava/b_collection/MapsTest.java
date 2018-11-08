@@ -1,11 +1,5 @@
 package com.liupeng.guava.b_collection;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
@@ -13,6 +7,12 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.liupeng.dto.User;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * Maps
@@ -40,7 +40,7 @@ public class MapsTest {
                 return input.getId();
             }
         });
-        System.out.println(map3);
+        System.out.println("###listToMap###：" + map3);
         return map3;
     }
 
@@ -59,7 +59,7 @@ public class MapsTest {
         Map<User, String> map4 = Maps.asMap(set, new Function() {
             @Override
             public Object apply(Object input) {
-                return ((User)input).getId();
+                return ((User) input).getId();
             }
         });
         System.out.println(map4);

@@ -1,9 +1,9 @@
 package com.liupeng.guava.b_collection;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.util.List;
 import java.util.Set;
-
-import com.google.common.collect.ImmutableSet;
 
 /**
  * 不可变集合 - ﻿ImmutableSet
@@ -14,7 +14,7 @@ import com.google.common.collect.ImmutableSet;
 public class ImmutableSetTest {
     public static void main(String[] args) {
         // 通过Builder创建
-        Set<String> set1 = ImmutableSet.<String>builder().add("red", "black").build();
+        Set<String> set1 = ImmutableSet.<String>builder().add("red", "red", "black").build();
         set1.forEach(System.out::println);
         set1 = ImmutableSet.<String>builder().add("red").add("b").build();
         set1.forEach(System.out::println);
@@ -24,7 +24,7 @@ public class ImmutableSetTest {
         set2.forEach(System.out::println);
 
         // 通过copyOf创建
-        Set<String> set3 = ImmutableSet.copyOf(new String[] {"red", "black"});
+        Set<String> set3 = ImmutableSet.copyOf(new String[]{"red", "black"});
         set3.forEach(System.out::println);
 
         // 转不可变List
