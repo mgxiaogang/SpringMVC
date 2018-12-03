@@ -1,10 +1,8 @@
 package com.liupeng.proxy.cglib.beanGenerator;
 
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Method;
-
 import com.liupeng.advice.vo.Result;
 import com.liupeng.advice.vo.User;
+import com.liupeng.util.ReflectUtil;
 import net.sf.cglib.beans.BeanCopier;
 import net.sf.cglib.beans.BeanGenerator;
 import net.sf.cglib.core.DefaultNamingPolicy;
@@ -12,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 /**
  * @author fengdao.lp
@@ -43,6 +44,9 @@ public class BeanGeneratorController {
         PropertyDescriptor propertyDescriptor = new PropertyDescriptor("fanlai", current.getClass());
         Method writeMethod = propertyDescriptor.getWriteMethod();
         writeMethod.invoke(current, "111111");
+
+        String fanlai = (String) ReflectUtil.getFieldValueByFieldName(current, "$cglib_prop_fanlai");
+        System.out.println(fanlai);
         return Result.buildSuccessResultOf(current);
     }
 
