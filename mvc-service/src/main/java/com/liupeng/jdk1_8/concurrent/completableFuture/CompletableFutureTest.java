@@ -35,6 +35,7 @@ public class CompletableFutureTest {
         ).collect(Collectors.toList());
 
         CompletableFuture<Void> allFutures = CompletableFuture.allOf(result.toArray(new CompletableFuture[result.size()]));
+        // 等待所有线程执行完成
         CompletableFuture<List<String>> allPageContentsFuture = allFutures.thenApply(v -> {
             return result.stream().map(CompletableFuture::join).collect(Collectors.toList());
         });
@@ -48,6 +49,9 @@ public class CompletableFutureTest {
         List<String> array = Lists.newArrayList();
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         List<String> list = Lists.newArrayList("liupeng", "laosun");
+        for (int i = 0; i < 1000; i++) {
+            list.add("" + i);
+        }
         List<CompletableFuture<String>> result = list.stream().map(str ->
                 CompletableFuture
                         .supplyAsync(() -> {
@@ -66,8 +70,10 @@ public class CompletableFutureTest {
                             array.add(s);
                         })
         ).collect(Collectors.toList());
-
+        System.out.println("1111111111111111111");
+        // 等待所有线程执行完成
         CompletableFuture.allOf(result.toArray(new CompletableFuture[result.size()])).join();
+        System.out.println("2222222222222222222");
         System.out.println(array);
         executorService.shutdown();
     }
