@@ -7,19 +7,15 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.support.BeanNameGenerator;
-import org.springframework.context.annotation.AnnotationBeanNameGenerator;
-import org.springframework.context.annotation.AnnotationConfigUtils;
-import org.springframework.context.annotation.AnnotationScopeMetadataResolver;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ScopeMetadata;
-import org.springframework.context.annotation.ScopeMetadataResolver;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.support.*;
+import org.springframework.context.annotation.*;
+
+import java.lang.annotation.Annotation;
+import java.util.Objects;
 
 /**
+ * Bean注册器 - 注册springBeanServiceImpl为Bean
+ *
  * @author fengdao.lp
  * @date 2018/5/31
  */
@@ -28,26 +24,46 @@ public class BeanRegisterConfiguration implements BeanDefinitionRegistryPostProc
     private ScopeMetadataResolver scopeMetadataResolver = new AnnotationScopeMetadataResolver();
     private BeanNameGenerator beanNameGenerator = new AnnotationBeanNameGenerator();
 
+    /**
+     * Bean被定义但还没被创建的时候执行
+     */
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        this.registerBean(registry, "springBeanServiceImpl", SpringBeanServiceImpl.class);
+        this.registerBean(registry, "springBeanServiceImpl", SpringBeanServiceImpl.class, BeanRegisterAnnotation.class);
     }
 
-    private void registerBean(BeanDefinitionRegistry registry, String beanName,
-                              Class<SpringBeanServiceImpl> beanCalss) {
+    private void registerBean(BeanDefinitionRegistry registry,
+                              String beanName,
+                              Class<SpringBeanServiceImpl> beanCalss,
+                              Class<? extends Annotation>... qualifiers) {
         AnnotatedGenericBeanDefinition annotatedGenericBeanDefinition = new AnnotatedGenericBeanDefinition(beanCalss);
         ScopeMetadata scopeMetadata = this.scopeMetadataResolver.resolveScopeMetadata(annotatedGenericBeanDefinition);
         // singleton
         annotatedGenericBeanDefinition.setScope(scopeMetadata.getScopeName());
         // 可以自动生成name
         String name = (null != beanName ? beanName : this.beanNameGenerator.generateBeanName(
-            annotatedGenericBeanDefinition, registry));
+                annotatedGenericBeanDefinition, registry));
         AnnotationConfigUtils.processCommonDefinitionAnnotations(annotatedGenericBeanDefinition);
+        // 注解的处理
+        if (Objects.nonNull(qualifiers)) {
+            for (Class<? extends Annotation> qualifier : qualifiers) {
+                if (Primary.class == qualifier) {
+                    annotatedGenericBeanDefinition.setPrimary(true);
+                } else if (Lazy.class == qualifier) {
+                    annotatedGenericBeanDefinition.setLazyInit(true);
+                } else {
+                    annotatedGenericBeanDefinition.addQualifier(new AutowireCandidateQualifier(qualifier));
+                }
+            }
+        }
 
         BeanDefinitionHolder beanDefinitionHolder = new BeanDefinitionHolder(annotatedGenericBeanDefinition, name);
         BeanDefinitionReaderUtils.registerBeanDefinition(beanDefinitionHolder, registry);
     }
 
+    /**
+     * Bean被创建但还没被初始化的时候执行
+     */
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.out.println("start");
