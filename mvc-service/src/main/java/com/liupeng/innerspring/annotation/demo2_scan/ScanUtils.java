@@ -8,6 +8,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  */
 public class ScanUtils {
     public static void scan() {
+        // BeanScannerConfigurer类变为了Bean
         AnnotationConfigApplicationContext annotationConfigApplicationContext = new AnnotationConfigApplicationContext();
         annotationConfigApplicationContext.register(CustomizeScanTest.class);
         annotationConfigApplicationContext.refresh();

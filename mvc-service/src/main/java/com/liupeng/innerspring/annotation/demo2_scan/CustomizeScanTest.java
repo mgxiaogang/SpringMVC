@@ -6,7 +6,6 @@ import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
@@ -78,11 +77,11 @@ public class CustomizeScanTest {
             // 扫描包下注解的类、并自动注解为Bean
             Set<BeanDefinitionHolder> beanDefinitions = super.doScan(basePackages);
             // 对Bean做代理
-            for (BeanDefinitionHolder holder : beanDefinitions) {
+            /*for (BeanDefinitionHolder holder : beanDefinitions) {
                 GenericBeanDefinition definition = (GenericBeanDefinition) holder.getBeanDefinition();
                 definition.getPropertyValues().add("innerClassName", definition.getBeanClassName());
                 definition.setBeanClass(FactoryBeanTest.class);
-            }
+            }*/
             return beanDefinitions;
         }
 
@@ -93,7 +92,7 @@ public class CustomizeScanTest {
         }
     }
 
-    public static class FactoryBeanTest<T> implements InitializingBean, FactoryBean<T> {
+    public class FactoryBeanTest<T> implements FactoryBean<T> {
 
         private String innerClassName;
 
@@ -130,10 +129,6 @@ public class CustomizeScanTest {
             return true;
         }
 
-        @Override
-        public void afterPropertiesSet() throws Exception {
-
-        }
     }
 
     public static class InterfaceProxy implements InvocationHandler {
