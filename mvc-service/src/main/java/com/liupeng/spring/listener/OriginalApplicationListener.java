@@ -20,7 +20,7 @@ public class OriginalApplicationListener implements ApplicationListener<ContextR
         ApplicationContext applicationContext = event.getApplicationContext();
         for (String name : applicationContext.getBeanDefinitionNames()) {
             Object bean = applicationContext.getBean(name);
-            logger.error(String.format("beanName:=%s, class:=%s", name, bean.getClass()));
+            logger.info(String.format("beanName:=%s, class:=%s", name, bean.getClass()));
         }
     }
 }
