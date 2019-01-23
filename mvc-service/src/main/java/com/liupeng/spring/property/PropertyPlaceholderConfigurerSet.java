@@ -93,7 +93,7 @@ public class PropertyPlaceholderConfigurerSet extends PropertyPlaceholderConfigu
      * 解析配置文件,后执行,推荐
      *
      * @param beanFactoryToProcess beanFactoryToProcess
-     * @param props                属性配置
+     * @param props                属性配置web-app
      * @throws BeansException 异常
      */
     @Override
